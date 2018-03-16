@@ -1,0 +1,18 @@
+Setting client pid to {0}
+didOpen: {0}
+didClose: TextDocumentIdentifier [
+  uri = "file:///home/lheinema/git/camel-lsp-client-eclipse/org.apache.camel.lsp.eclipse.client.tests.integration/target/work%20sp@cé/CamelLSPLoadedByExtensionPointIT/camelFile.xml"
+]
+Shutting down language server
+Setting client pid to {0}
+didOpen: {0}
+didClose: TextDocumentIdentifier [
+  uri = "file:///home/lheinema/git/camel-lsp-client-eclipse/org.apache.camel.lsp.eclipse.client.tests.integration/target/work%20sp@cé/CamelLSPLoadedByExtensionPointIT/camelFile.xml"
+]
+Shutting down language server
+Setting client pid to {0}
+didOpen: {0}
+didClose: TextDocumentIdentifier [
+  uri = "file:///home/lheinema/git/camel-lsp-client-eclipse/org.apache.camel.lsp.eclipse.client.tests.integration/target/work%20sp@cé/CamelLSPLoadedByExtensionPointIT/camelFile.xml"
+]
+Shutting down language server

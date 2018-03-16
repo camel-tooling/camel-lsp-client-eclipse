@@ -1,44 +1,22 @@
-[![Build Status](https://travis-ci.org/apupier/camel-language-server.svg?branch=master)](https://travis-ci.org/apupier/camel-language-server)
+How to debug Camel Language Server from Eclipse client
+======================================================
 
-camel-language-server
-=====================
+1. Add debug arguments to the list org.apache.camel.lsp.eclipse.client.CamelLSPStreamConnectionProvider.computeCommands()
 
-camel-language-server is a server implementation that provides Camel DSL smartness.
-The server adheres to the [language server protocol](https://github.com/Microsoft/language-server-protocol)
-and can be used with any editor that supports the protocol.  The server utilizes [Apache Camel](http://camel.apache.org/) and [M2Eclipse](http://www.eclipse.org/m2e/).
+You will end up with something like:
 
+	private static List<String> computeCommands() {
+		List<String> commands = new ArrayList<>();
+		commands.add("java");
+		commands.addAll(debugArguments());
+		commands.add("-jar");
+		commands.add(computeCamelLanguageServerJarPath());
+		return commands;
+	}
 
-Features
---------------
-* Code completion
-* Hover
-
-Features planned
---------------
-* As you type reporting of parsing and compilation errors
-* More advanced Code completion
-* Code outline
-* Code navigation
-* Code lens (references)
-* Highlights
-* Code formatting
-
-Installation
-------------
-
-Please see installation guide for each IDE:
-
-* [Eclipse](clients/eclipse/Install.md)
-* [VS Code](clients/vscode/Install.md)
-
-
-Feedback
----------
-
-* File a bug in [GitHub Issues](https://github.com/lhein/camel-language-server/issues).
-
-
-License
--------
-ASL 2.0, See [LICENSE](LICENSE) file.
-
+	private static List<String> debugArguments() {
+		return Arrays.asList("-Xdebug","-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=3000");
+	}
+	
+	
+2. Create a Remote Java Application Debug Launch configuration in Eclipse
