@@ -5,8 +5,6 @@ matrix:
       before_install:
         - "export DISPLAY=:99.0"
         - "sh -e /etc/init.d/xvfb start"
-        - "wget https://github.com/camel-idea-plugin/camel-language-server/releases/download/untagged-691265464c773b7827f9/camel-lsp-server-1.0.0-SNAPSHOT.jar"
-        - "mvn install:install-file -DgroupId=org.apache.camel.tools.lsp -DartifactId=camel-lsp-server -Dversion=1.0.0-SNAPSHOT -Dpackaging=jar -Dfile=camel-lsp-server-1.0.0-SNAPSHOT.jar"
       script:
         - 'mvn clean verify'
       jdk: oraclejdk8
