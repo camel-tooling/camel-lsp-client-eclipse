@@ -1,0 +1,29 @@
+matrix:
+  include:
+    - language: java
+      sudo: false
+      before_install:
+        - "export DISPLAY=:99.0"
+        - "sh -e /etc/init.d/xvfb start"
+      script:
+        - 'mvn clean verify'
+      jdk: oraclejdk8
+      deploy:
+        provider: releases
+        api_key:  ${DEPLOY_TOKEN}
+        file:
+          - "org.apache.camel.lsp.eclipse.updatesite/target/org.apache.camel.lsp.eclipse.updatesite-1.0.0-SNAPSHOT.zip"
+        skip_cleanup: true
+        overwrite: true
+        on:
+          branch:  master
+          # tags: true
+        branches:
+          only:
+- master
+      cache:
+        directories:
+          - $HOME/.m2
+          - $HOME/.gradle/
+env: DISPLAY=:99
+
