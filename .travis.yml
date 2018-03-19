@@ -20,10 +20,9 @@ matrix:
           # tags: true
         branches:
           only:
-- master
+            - master
       cache:
         directories:
           - $HOME/.m2
           - $HOME/.gradle/
 env: DISPLAY=:99
-
