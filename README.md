@@ -1,3 +1,5 @@
+[![Gitter](https://img.shields.io/gitter/room/camel-tooling/Lobby.js.svg)](https://gitter.im/camel-tooling/Lobby)
+
 How to debug Camel Language Server from Eclipse client
 ======================================================
 
