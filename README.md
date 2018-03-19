@@ -1,4 +1,8 @@
+[![GitHub tag](https://img.shields.io/github/tag/camel-idea-plugin/camel-lsp-client-eclipse.svg?style=plastic)]()
+[![Build Status](https://travis-ci.org/camel-idea-plugin/camel-lsp-client-eclipse.svg?branch=master)](https://travis-ci.org/camel-idea-plugin/camel-lsp-client-eclipse)
+[![License](https://img.shields.io/badge/license-Apache%202-blue.svg)]()
 [![Gitter](https://img.shields.io/gitter/room/camel-tooling/Lobby.js.svg)](https://gitter.im/camel-tooling/Lobby)
+
 
 How to debug Camel Language Server from Eclipse client
 ======================================================
