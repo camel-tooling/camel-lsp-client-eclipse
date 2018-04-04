@@ -7,7 +7,7 @@
 How to debug Camel Language Server from Eclipse client
 ======================================================
 
-1. Add debug arguments to the list org.apache.camel.lsp.eclipse.client.CamelLSPStreamConnectionProvider.computeCommands()
+1. Add debug arguments to the list com.github.camel-tooling.eclipse.client.CamelLSPStreamConnectionProvider.computeCommands()
 
 You will end up with something like:
 
