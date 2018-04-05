@@ -7,11 +7,11 @@ you can get the [Eclipse IDE for Java developers](http://www.eclipse.org/downloa
 and just install Eclipse PDE from marketplace.
 
 2. Once installed use `File > Open Projects from File System...` and
-point it `camel-language-server` and Eclipse should automatically
+point it `camel-lsp-client-eclipse` and Eclipse should automatically
 detect the projects and import it properly.
 
 3. If you discover an error on `pom.xml` after import about Tycho, you can use Quick Fix
-(Ctrl+1) to install the Tycho maven integration.
+(Ctrl+1) to install the Tycho Maven integration.
 
 
 Building from command line
@@ -23,3 +23,9 @@ Building from command line
 ```bash    
     $ mvn clean verify
 ````
+
+How to debug Camel Language Server from Eclipse client
+======================================================
+
+1. Modify launch configuration to include -DdebugLSPServer=true VM argument
+2. Create a Remote Java Application Debug Launch configuration in Eclipse listening to port 3000
