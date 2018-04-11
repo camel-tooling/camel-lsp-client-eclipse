@@ -10,6 +10,6 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>com.github.camel-tooling.eclipse.updatesite</artifactId>
-	<name>${base.name} :: Clients :: Eclipse Client :: Update Site</name>
+	<name>${base.name} :: Update Site</name>
 	<packaging>eclipse-repository</packaging>	
 </project>
