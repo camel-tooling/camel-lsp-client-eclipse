@@ -4,26 +4,25 @@
 [![Gitter](https://img.shields.io/gitter/room/camel-tooling/Lobby.js.svg)](https://gitter.im/camel-tooling/Lobby)
 
 
-How to debug Camel Language Server from Eclipse client
-======================================================
+How to Install
+--------------
 
-1. Add debug arguments to the list com.github.camel-tooling.eclipse.client.CamelLSPStreamConnectionProvider.computeCommands()
+* Install Eclipse
+* Go to latest release page https://github.com/camel-tooling/camel-lsp-client-eclipse/releases/latest/
+* Download zipped update site named com.github.camel-tooling.eclipse.updatesite-1.0.0-SNAPSHOT.zip
+* In Eclipse, Help -> Install New Software...
+* Click Add...
+* Click Archive...
+* Select the zipped file downloaded
+* Click Ok
+* Select the "Apache Camel LSP Client Extensions Plugin"
+* Click Next
+* Click Next
+* Accept license if asked
+* Click Finish
+* Wait...
+* Click "Install Anyway"
+* Click "Restart Now"
+* Enjoy!
 
-You will end up with something like:
-
-	private static List<String> computeCommands() {
-		List<String> commands = new ArrayList<>();
-		commands.add("java");
-		commands.addAll(debugArguments());
-		commands.add("-jar");
-		commands.add(computeCamelLanguageServerJarPath());
-		return commands;
-	}
-
-	private static List<String> debugArguments() {
-		return Arrays.asList("-Xdebug","-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=3000");
-	}
-	
-	
-2. Create a Remote Java Application Debug Launch configuration in Eclipse
-
+tips: you can install it on top of [Fuse Tooling](https://tools.jboss.org/features/fusetools.html) which will provide even more help for development.
