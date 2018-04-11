@@ -12,5 +12,5 @@
 	
 	<packaging>eclipse-target-definition</packaging>
 	<artifactId>camel-lsp-target-platform</artifactId>
-	<name>${base.name} :: Clients :: Eclipse Client :: Target Platform</name>
+	<name>${base.name} :: Target Platform</name>
 </project>
