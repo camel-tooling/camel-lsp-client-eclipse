@@ -9,7 +9,7 @@
             languageId="LANGUAGE_ID_APACHE_CAMEL">
       </contentTypeMapping>
       <server
-            class="com.github.camel-tooling.eclipse.client.CamelLSPStreamConnectionProvider"
+            class="com.github.cameltooling.eclipse.client.CamelLSPStreamConnectionProvider"
             id="Camel LSP Server"
             label="Camel LSP Server">
       </server>
@@ -24,7 +24,7 @@
   <proposalComputer
        activate="true"
        categoryId="org.apache.camel.category"
-       class="com.github.camel-tooling.eclipse.xml.completion.CamelURICompletionProposalComputer"
+       class="com.github.cameltooling.eclipse.xml.completion.CamelURICompletionProposalComputer"
        id="org.apache.camel.xml.proposalcomputer">      
     <contentType id="org.eclipse.core.runtime.xml"/>      
   </proposalComputer> 
