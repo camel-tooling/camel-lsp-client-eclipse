@@ -30,6 +30,7 @@
 	<modules>
 		<module>camel-lsp-target-platform</module>
 		<module>com.github.camel-tooling.lsp.eclipse.client</module>
+		<module>com.github.cameltooling.lsp.eclipse.client.feature</module>
 		<module>com.github.camel-tooling.lsp.eclipse.client.tests.integration</module>
 		<module>com.github.camel-tooling.lsp.eclipse.updatesite</module>
 	</modules>
