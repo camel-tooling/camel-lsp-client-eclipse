@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="com.github.cameltooling.lsp.eclipse.client.feature"
-      label="Tooling for Apache Camel"
+      label="Tooling for Apache Camel based on Apache Camel implementation of Language Server Protocol"
       version="1.0.0.qualifier">
 
    <description>
@@ -213,7 +213,7 @@
    </license>
 
    <url>
-      <update label="Apache Camel Tooling" url="https://camel-tooling.github.io/camel-lsp-client-eclipse-update-site/"/>
+      <update label="Tooling for Apache Camel based on Apache Camel implementation of Language Server Protocol" url="https://camel-tooling.github.io/camel-lsp-client-eclipse-update-site/"/>
    </url>
 
    <plugin
