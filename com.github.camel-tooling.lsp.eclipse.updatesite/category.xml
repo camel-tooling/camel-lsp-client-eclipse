@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <bundle id="com.github.camel-tooling.eclipse.client" version="1.0.0.qualifier"/>
+   <feature url="features/com.github.cameltooling.lsp.eclipse.client.feature_1.0.0.qualifier.jar" id="com.github.cameltooling.lsp.eclipse.client.feature" version="1.0.0.qualifier">
+      <category name="com.github.cameltooling.updatesite.category"/>
+   </feature>
+   <category-def name="com.github.cameltooling.updatesite.category" label="Tooling for Apache Camel">
+      <description>
+         Provides Camel URI completion for xml DSL in Eclipse XML Editor and Language Server Editor
+      </description>
+   </category-def>
 </site>
