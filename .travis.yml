@@ -12,6 +12,15 @@ cache:
   directories:
   - $HOME/.m2
   - $HOME/.gradle/
+after_success:
+- if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_BRANCH == "master" ]]; then 
+  mvn sonar:sonar -Dsonar.login=${SONAR_TOKEN} -Dsonar.projectKey="camel-lsp-client-eclipse" -Dsonar.projectName="Eclipse Client for Apache Camel Language Server";
+ fi
+addons:
+  sonarcloud:
+    organization: "camel-tooling"
+    branches:
+      - master
 deploy:
   - provider: releases
     api_key:  ${DEPLOY_TOKEN}
