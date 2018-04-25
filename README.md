@@ -8,16 +8,10 @@ How to Install
 --------------
 
 * Install Eclipse
-* Go to latest release page https://github.com/camel-tooling/camel-lsp-client-eclipse/releases/latest/
-* Download zipped update site named com.github.camel-tooling.eclipse.updatesite-1.0.0-SNAPSHOT.zip
-* In Eclipse, Help -> Install New Software...
-* Click Add...
-* Click Archive...
-* Select the zipped file downloaded
-* Click Ok
-* Select the "Apache Camel LSP Client Extensions Plugin"
-* Click Next
-* Click Next
+* Drag the button to your running Eclipse
+
+[![Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client](https://marketplace.eclipse.org/sites/all/themes/solstice/public/images/marketplace/btn-install.png)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=4038733 "Drag to your running Eclipse* workspace. *Requires Eclipse Marketplace Client")
+* Click Confirm
 * Accept license if asked
 * Click Finish
 * Wait...
