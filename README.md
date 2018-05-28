@@ -4,8 +4,14 @@
 [![Gitter](https://img.shields.io/gitter/room/camel-tooling/Lobby.js.svg)](https://gitter.im/camel-tooling/Lobby)
 
 
-How to Install
---------------
+# Features
+
+When using the Generic Text editor, completion and documentation on hover are supported. See [here](https://github.com/camel-tooling/camel-language-server/blob/master/README.md#features) for details.
+
+When using XML editor, only the completion is provided.
+
+
+# How to Install
 
 * Install Eclipse
 * Drag the button to your running Eclipse
