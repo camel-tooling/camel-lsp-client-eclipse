@@ -22,7 +22,7 @@ cp -r $REPO_PATH/com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesi
 # Commit and Push the Changes
 git add -f .
 git status
-git commit -m "Deploy to GitHub Pages: ${SHA} from travis build $TRAVIS_BUILD_NUMBER"
+git commit -m "Deploy ${DEPLOY_REPO_ROOT} update site to GitHub Pages: ${SHA} from travis build $TRAVIS_BUILD_NUMBER"
 git push -fq origin master > /dev/null
 # return to original path
 cd $REPO_PATH
