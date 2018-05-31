@@ -26,6 +26,9 @@ after_success:
 - mkdir com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/
 - mkdir com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/${DEPLOY_REPO_ROOT}/
 - mv com.github.camel-tooling.lsp.eclipse.updatesite/target/repository/* com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/${DEPLOY_REPO_ROOT}/
+- find website/* -name 'index.html' | xargs perl -pi -e "s/##VERSION##/${PLUGIN_VERSION}/g"
+- find website/* -name 'index.html' | xargs perl -pi -e "s/##TYPE##/${DEPLOY_REPO_ROOT}/g"
+- cp website/index.html com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/${DEPLOY_REPO_ROOT}/
 addons:
   sonarcloud:
     organization: "camel-tooling"
@@ -45,5 +48,10 @@ deploy:
     overwrite: true
     on:
       branch:  master
+  - provider: script
+    script: bash .travis_publish
+    skip_cleanup: true
+    overwrite: true
+    on:
       tags: true
-      
+
