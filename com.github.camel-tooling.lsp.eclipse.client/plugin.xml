@@ -5,13 +5,23 @@
          point="org.eclipse.lsp4e.languageServer">
       <contentTypeMapping
             contentType="org.eclipse.core.runtime.xml"
-            id="Camel LSP Server"
+            id="Camel LSP Server for XML"
+            languageId="LANGUAGE_ID_APACHE_CAMEL">
+     </contentTypeMapping>
+     <contentTypeMapping
+            contentType="org.eclipse.jdt.core.javaSource"
+            id="Camel LSP Server for Java"
             languageId="LANGUAGE_ID_APACHE_CAMEL">
       </contentTypeMapping>
       <server
             class="com.github.cameltooling.eclipse.client.CamelLSPStreamConnectionProvider"
-            id="Camel LSP Server"
-            label="Camel LSP Server">
+            id="Camel LSP Server for Java"
+            label="Camel LSP Server for Java">
+      </server>
+      <server
+            class="com.github.cameltooling.eclipse.client.CamelLSPStreamConnectionProvider"
+            id="Camel LSP Server for XML"
+            label="Camel LSP Server for XML">
       </server>
    </extension>
    <extension
@@ -28,6 +38,16 @@
        id="org.apache.camel.xml.proposalcomputer">      
     <contentType id="org.eclipse.core.runtime.xml"/>      
   </proposalComputer> 
+   </extension>
+   <extension
+         id="id1"
+         point="org.eclipse.jdt.ui.javaCompletionProposalComputer">
+      <javaCompletionProposalComputer
+            activate="true"
+            categoryId="org.eclipse.jdt.ui.defaultProposalCategory"
+            class="com.github.cameltooling.eclipse.java.completion.CamelCompletionProposalComputer"
+            needsSortingAfterFiltering="false">
+      </javaCompletionProposalComputer>
    </extension>
 
 </plugin>
