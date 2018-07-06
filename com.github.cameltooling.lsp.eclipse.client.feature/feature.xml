@@ -2,7 +2,7 @@
 <feature
       id="com.github.cameltooling.lsp.eclipse.client.feature"
       label="Tooling for Apache Camel based on Apache Camel implementation of Language Server Protocol"
-      version="1.0.0.qualifier">
+      version="1.0.0">
 
    <description>
       Provides Camel URI completion for xml DSL in Eclipse XML Editor and Language Server Editor
