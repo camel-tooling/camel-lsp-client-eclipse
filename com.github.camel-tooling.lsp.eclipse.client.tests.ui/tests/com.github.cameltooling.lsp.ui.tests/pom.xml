@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.github.camel-tooling.lsp</groupId>
+		<artifactId>tests</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>com.github.cameltooling.lsp.ui.tests</artifactId>
+	<name>${base.name} :: UI Tests :: Tests :: LSP Eclipse Client Tests</name>
+	<packaging>eclipse-test-plugin</packaging>
+
+	<properties>
+		<surefire.timeout>21600</surefire.timeout>
+		<memoryOptions2>-XX:MaxPermSize=384m</memoryOptions2>
+		<pauseFailedTest>false</pauseFailedTest>
+		<reddeer.skipUnfixedIssues>false</reddeer.skipUnfixedIssues>
+		<integrationTestsSystemProperties>-Dreddeer.skipUnfixedIssues=${reddeer.skipUnfixedIssues} -Dorg.eclipse.swt.internal.gtk.disablePrinting</integrationTestsSystemProperties>
+		<reddeerConfig>-Drd.config=${rd.config}</reddeerConfig>
+		<enable.debug.log>false</enable.debug.log>
+		<systemProperties>${integrationTestsSystemProperties} ${reddeerConfig} ${ideConfig}</systemProperties>
+		<customization.file>resources/settings/plugin_customization.ini</customization.file>
+		<maven.repo>${project.build.directory}/requirements/repository/</maven.repo>
+		<staging.repos>false</staging.repos>
+		<rd.skipUnfixedIssues>true</rd.skipUnfixedIssues>
+		<skipUITests>false</skipUITests>
+		<testUIClass>CamelLSPCompletionTest</testUIClass>
+	</properties>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-files</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<outputDirectory>${project.build.directory}/requirements</outputDirectory>
+							<resources>
+								<resource>
+									<directory>resources/config</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- LSP Eclipse Client Tests -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<product>org.eclipse.platform.ide</product>
+					<application>org.eclipse.ui.ide.workbench</application>
+					<useUIHarness>true</useUIHarness>
+					<useUIThread>false</useUIThread>
+					<appArgLine>pluginCustomization ${customization.file} -clean -testpluginname com.github.cameltooling.lsp.ui.tests</appArgLine>
+					<testSuite>com.github.cameltooling.lsp.ui.tests</testSuite>
+					<testClass>**/${testUIClass}</testClass>
+					<skip>${skipUITests}</skip>
+					<systemProperties>
+						<logDebug>${enable.debug.log}</logDebug>
+						<maven.settings>${project.build.directory}/requirements/emptysettings.xml</maven.settings>
+						<maven.repository>${maven.repo}</maven.repository>
+						<staging.repositories>${staging.repos}</staging.repositories>
+						<rd.skipUnfixedIssues>${rd.skipUnfixedIssues}</rd.skipUnfixedIssues>
+					</systemProperties>
+					<dependencies combine.children="append">
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.platform</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.e4.rcp.feature.group</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.jdt.feature.group</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+					</dependencies>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
