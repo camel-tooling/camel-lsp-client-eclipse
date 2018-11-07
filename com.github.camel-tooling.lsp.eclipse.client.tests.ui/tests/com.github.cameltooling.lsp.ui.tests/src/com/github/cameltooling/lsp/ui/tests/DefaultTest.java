@@ -37,7 +37,7 @@ import org.junit.BeforeClass;
  */
 @CleanWorkspace
 @CleanErrorLog
-public class DefaultTest {
+public abstract class DefaultTest {
 
 	private static Logger log = Logger.getLogger(DefaultTest.class);
 

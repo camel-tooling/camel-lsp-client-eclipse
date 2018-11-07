@@ -27,6 +27,10 @@ import com.github.cameltooling.lsp.reddeer.LogGrapper;
  */
 public class LogChecker {
 	
+	private LogChecker() {
+		//private constructor, only static access
+	}
+	
 	public static boolean noLSPError() {
 		return LogGrapper.getPluginErrors("lsp").isEmpty();
 	}
