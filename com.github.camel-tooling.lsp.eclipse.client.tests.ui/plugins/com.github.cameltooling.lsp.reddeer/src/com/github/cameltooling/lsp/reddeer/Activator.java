@@ -16,55 +16,29 @@
  */
 package com.github.cameltooling.lsp.reddeer;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Platform;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleActivator;
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-public class Activator implements BundleActivator {
+public class Activator extends Plugin {
 
-	private static BundleContext context;
+	public static final String PLUGINID = "com.github.cameltooling.lsp.reddeer";
+	private static Activator plugin;
 
-	static BundleContext getContext() {
-		return context;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
-	 */
+	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		Activator.context = bundleContext;
+		setInstance(this);
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
+	
+	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		Activator.context = null;
+		setInstance(null);
 	}
-
-	public static File getResources() {
-		return getResources("/");
+	
+	private static synchronized void setInstance(Activator plugin) {
+		Activator.plugin = plugin;
 	}
-
-	public static File getResources(String path) {
-		Bundle bundle = Platform.getBundle("com.github.cameltooling.lsp.reddeer");
-		try {
-			return new File(FileLocator.getBundleFile(bundle), "resources/" + path);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
+	
+	public static synchronized Activator getInstance() {
+		return plugin;
 	}
-
 }

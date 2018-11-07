@@ -18,8 +18,11 @@ package com.github.cameltooling.lsp.ui.tests.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.Scanner;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.reddeer.common.logging.Logger;
 import org.eclipse.reddeer.common.matcher.RegexMatcher;
@@ -33,6 +36,8 @@ import org.eclipse.reddeer.swt.impl.styledtext.DefaultStyledText;
 import org.eclipse.reddeer.swt.impl.toolbar.DefaultToolItem;
 import org.eclipse.reddeer.workbench.impl.editor.TextEditor;
 import org.eclipse.reddeer.workbench.impl.shell.WorkbenchShell;
+import org.xml.sax.SAXException;
+
 import com.github.cameltooling.lsp.reddeer.ResourceHelper;
 import com.github.cameltooling.lsp.reddeer.XPathEvaluator;
 import com.github.cameltooling.lsp.ui.tests.Activator;
@@ -45,6 +50,10 @@ import com.github.cameltooling.lsp.ui.tests.Activator;
 public class EditorManipulator {
 
 	private static Logger log = Logger.getLogger(EditorManipulator.class);
+	
+	private EditorManipulator() {
+		//private constructor, only static access
+	}
 
 	/**
 	 * Replaces content of a file opened in active text editor with content of the
@@ -102,12 +111,15 @@ public class EditorManipulator {
 	 * @param file path to the file
 	 * @return true - content of the file and the text editor is the same, false -
 	 *         otherwise
+	 * @throws ParserConfigurationException 
+	 * @throws IOException 
+	 * @throws SAXException 
 	 */
-	public static boolean isEditorContentEqualsFile(String file) {
+	public static boolean isEditorContentEqualsFile(String file) throws SAXException, IOException, ParserConfigurationException {
 		String editorText = new DefaultStyledText().getText();
 		if (file.equals("resources/camel-context-all.xml")) {
 			XPathEvaluator xpath = new XPathEvaluator(new StringReader(editorText));
-			if ((xpath.evaluateBoolean("/beans/camelContext/route/*[1]/@uri = 'file:src/data?noop=true'"))
+			return ((xpath.evaluateBoolean("/beans/camelContext/route/*[1]/@uri = 'file:src/data?noop=true'"))
 					&& (xpath.evaluateString("/beans/camelContext/route/choice/*[1]/*[1][text()]")
 							.equals("/person/city = 'London'"))
 					&& (xpath.evaluateBoolean("/beans/camelContext/route/choice/*[1]/*[2]/@message = 'UK message'"))
@@ -115,9 +127,7 @@ public class EditorManipulator {
 							"/beans/camelContext/route/choice/*[1]/*[3]/@uri = 'file:target/messages/uk'"))
 					&& (xpath.evaluateBoolean("/beans/camelContext/route/choice/*[2]/*[1]/@message = 'Other message'"))
 					&& (xpath.evaluateBoolean(
-							"/beans/camelContext/route/choice/*[2]/*[2]/@uri = 'file:target/messages/others'")))
-				return true;
-			return false;
+							"/beans/camelContext/route/choice/*[2]/*[2]/@uri = 'file:target/messages/others'")));
 		} else {
 			String fileText = getFileContent(file);
 			return editorText.equals(fileText);

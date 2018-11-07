@@ -20,12 +20,18 @@ import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 
 /**
  * Class provides resource related static method
  */
 public class ResourceHelper {
+	
+	private ResourceHelper() {
+		//private constructor, only static access
+	}
 
 	/**
 	 * Provide bundle resource absolute path
@@ -54,7 +60,7 @@ public class ResourceHelper {
 						+ builder.toString();
 			}
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			Activator.getInstance().getLog().log(new Status(IStatus.ERROR, Activator.PLUGINID, "Error locating file in "+ pluginId, ex));
 		}
 
 		return filePath;

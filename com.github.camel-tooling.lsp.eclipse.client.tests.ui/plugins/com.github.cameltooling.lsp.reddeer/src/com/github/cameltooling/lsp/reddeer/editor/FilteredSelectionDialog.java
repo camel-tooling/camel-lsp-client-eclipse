@@ -56,16 +56,10 @@ public class FilteredSelectionDialog extends DefaultShell {
 
 	public FilteredSelectionDialog selectItem(String text) {
 		DefaultTable table = new DefaultTable(this);
-		Display.syncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				org.eclipse.swt.widgets.TableItem[] item = table.getSWTWidget().getSelection();
-				if (item.length > 0) {
-					if (!item[0].getText().startsWith(text)) {
-						table.getItem(text).select();
-					}
-				}
+		Display.syncExec(() -> {
+			org.eclipse.swt.widgets.TableItem[] item = table.getSWTWidget().getSelection();
+			if (item.length > 0 &&  !item[0].getText().startsWith(text)) {
+				table.getItem(text).select();
 			}
 		});
 		return this;

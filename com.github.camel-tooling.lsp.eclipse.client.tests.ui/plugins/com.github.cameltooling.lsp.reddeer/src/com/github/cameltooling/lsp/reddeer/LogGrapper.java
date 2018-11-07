@@ -28,6 +28,10 @@ import org.eclipse.reddeer.eclipse.ui.views.log.LogView;
  * @author tsedmik
  */
 public class LogGrapper {
+	
+	private LogGrapper() {
+		//private constructor, only static access
+	}
 
 	/**
 	 * Retrieves all error logs about given plugin
@@ -38,7 +42,7 @@ public class LogGrapper {
 	 */
 	public static List<LogMessage> getPluginErrors(String plugin) {
 
-		List<LogMessage> errors = new ArrayList<LogMessage>();
+		List<LogMessage> errors = new ArrayList<>();
 		LogView log = new LogView();
 		log.open();
 		List<LogMessage> allErrors = log.getErrorMessages();

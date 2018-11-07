@@ -16,14 +16,11 @@
  */
 package com.github.cameltooling.lsp.reddeer;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringWriter;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
@@ -38,6 +35,8 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -48,93 +47,53 @@ public class XPathEvaluator {
 	public static final boolean DEFAULT_NAMESPACE_AWARE = false;
 
 	public static final DocumentBuilderFactory DOC_FACTORY = DocumentBuilderFactory.newInstance();
-	public static final XPath XPATH = XPathFactory.newInstance().newXPath();
+	private final XPath xpath = XPathFactory.newInstance().newXPath();
 
 	private Document doc;
 
-	public XPathEvaluator(File file) {
-		this(file, DEFAULT_NAMESPACE_AWARE);
-	}
-
-	public XPathEvaluator(File file, boolean namespaceAware) {
-		this(getReader(file), namespaceAware);
-	}
-
-	public XPathEvaluator(Reader reader) {
+	public XPathEvaluator(Reader reader) throws SAXException, IOException, ParserConfigurationException {
 		this(reader, DEFAULT_NAMESPACE_AWARE);
 	}
 
-	public XPathEvaluator(InputStream inputStream) {
-		this(inputStream, DEFAULT_NAMESPACE_AWARE);
-	}
-
-	public XPathEvaluator(Reader reader, boolean namespaceAware) {
-		try {
-			DOC_FACTORY.setNamespaceAware(namespaceAware);
-			doc = DOC_FACTORY.newDocumentBuilder().parse(new InputSource(reader));
-		} catch (SAXException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} catch (ParserConfigurationException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public XPathEvaluator(InputStream inputStream, boolean namespaceAware) {
-		try {
-			DOC_FACTORY.setNamespaceAware(namespaceAware);
-			doc = DOC_FACTORY.newDocumentBuilder().parse(new InputSource(inputStream));
-			inputStream.close();
-		} catch (SAXException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} catch (ParserConfigurationException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private static Reader getReader(File file) {
-		try {
-			return new FileReader(file);
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
+	public XPathEvaluator(Reader reader, boolean namespaceAware) throws SAXException, IOException, ParserConfigurationException {
+		DOC_FACTORY.setNamespaceAware(namespaceAware);
+		doc = DOC_FACTORY.newDocumentBuilder().parse(new InputSource(reader));
 	}
 
 	public boolean evaluateBoolean(String expr) {
 		try {
-			return (Boolean) XPATH.evaluate(expr, doc, XPathConstants.BOOLEAN);
+			return (Boolean) xpath.evaluate(expr, doc, XPathConstants.BOOLEAN);
 		} catch (XPathExpressionException e) {
-			e.printStackTrace();
-			System.out.println("Error evaluating xPath '" + expr + "'");
+			logXpathEvaluationError(e, expr);
 			return false;
 		}
 	}
 
+	private void logXpathEvaluationError(Exception e, String expr) {
+		Activator.getInstance().getLog().log(new Status(IStatus.ERROR, Activator.PLUGINID, "Error evaluating xPath '" + expr + "'", e));
+	}
+
 	public String evaluateString(String expr) {
 		try {
-			return (String) XPATH.evaluate(expr, doc, XPathConstants.STRING);
+			return (String) xpath.evaluate(expr, doc, XPathConstants.STRING);
 		} catch (XPathExpressionException e) {
-			e.printStackTrace();
-			System.out.println("Error evaluating xPath '" + expr + "'");
+			logXpathEvaluationError(e, expr);
 			return null;
 		}
 	}
 
 	public Node evaluateNode(String expr) {
 		try {
-			return (Node) XPATH.evaluate(expr, doc, XPathConstants.NODE);
+			return (Node) xpath.evaluate(expr, doc, XPathConstants.NODE);
 		} catch (XPathExpressionException e) {
-			e.printStackTrace();
-			System.out.println("Error evaluating xPath '" + expr + "'");
+			logXpathEvaluationError(e, expr);
 			return null;
 		}
 	}
 
-	public void printDocument(Result target) throws IOException, TransformerException {
+	public void printDocument(Result target) throws TransformerException {
 		TransformerFactory tf = TransformerFactory.newInstance();
+		tf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 		Transformer transformer = tf.newTransformer();
 		transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
 		transformer.setOutputProperty(OutputKeys.METHOD, "xml");
@@ -150,10 +109,8 @@ public class XPathEvaluator {
 		StringWriter writer = new StringWriter();
 		try {
 			printDocument(new StreamResult(writer));
-		} catch (IOException e) {
-			e.printStackTrace();
 		} catch (TransformerException e) {
-			e.printStackTrace();
+			Activator.getInstance().getLog().log(new Status(IStatus.ERROR, Activator.PLUGINID, "Error printing Document", e));
 		}
 		return writer.toString();
 	}

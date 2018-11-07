@@ -26,7 +26,11 @@ public class ConsolePreferenceUtil {
 	public static final String CONSOLE_PLUGIN = "org.eclipse.debug.ui";
 	public static final String CONSOLE_OPEN_ON_ERR_KEY = "DEBUG.consoleOpenOnErr";
 	public static final String CONSOLE_OPEN_ON_OUT_KEY = "DEBUG.consoleOpenOnOut";
-
+	
+	private ConsolePreferenceUtil() {
+		//private constructor, only static access
+	}
+	
 	/**
 	 * Decides whether the console opens on error
 	 * 
