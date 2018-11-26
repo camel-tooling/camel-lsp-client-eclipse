@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="camel-lsp-eclipse" sequenceNumber="6">
+<?pde version="3.8"?><target name="camel-lsp-eclipse" sequenceNumber="7">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.pde.feature.group" version="3.13.100.v20180611-0826"/>
@@ -19,6 +19,27 @@
 <unit id="org.eclipse.lsp4j.sdk.feature.group" version="0.4.1.v20180515-1323"/>
 <unit id="org.eclipse.wst.xml_ui.feature.feature.group" version="3.10.0.v201804210200"/>
 <repository location="http://download.eclipse.org/releases/photon"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.reddeer.codegen.feature.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.eclipse.feature.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.eclipse.feature.source.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.gef.spy.feature.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.graphiti.feature.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.graphiti.feature.source.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.logparser.feature.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.logparser.feature.source.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.recorder.feature.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.recorder.feature.source.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.selenium.feature.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.spy.feature.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.swt.feature.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.swt.feature.source.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.tests.feature.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.tests.feature.source.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.ui.feature.feature.group" version="2.3.0.Final"/>
+<unit id="org.eclipse.reddeer.ui.feature.source.feature.group" version="2.3.0.Final"/>
+<repository location="http://download.eclipse.org/reddeer/releases/2.3.0"/>
 </location>
 </locations>
 </target>
