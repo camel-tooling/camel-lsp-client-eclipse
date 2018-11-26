@@ -25,10 +25,7 @@
 		<sonar.jacoco.reportPath>../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.jacoco.itReportPath>../target/jacoco-it.exec</sonar.jacoco.itReportPath>
 		<sonar.jacoco.reportPaths>${sonar.jacoco.reportPath},${sonar.jacoco.itReportPath}</sonar.jacoco.reportPaths>
-		<!-- UI Tests properties -->
-		<reddeer-photon.site>http://download.eclipse.org/reddeer/releases/2.3.0/</reddeer-photon.site>
 	</properties>
-
 	<modules>
 		<module>camel-lsp-target-platform</module>
 		<module>com.github.camel-tooling.lsp.eclipse.updatesite</module>
@@ -37,16 +34,6 @@
 		<module>com.github.camel-tooling.lsp.eclipse.client.tests.ui</module>
 		<module>com.github.camel-tooling.lsp.eclipse.client.tests.integration</module>
 	</modules>
-
-	<repositories>
-		<!-- RedDeer Test Framework update site -->
-		<repository>
-			<id>reddeer</id>
-			<url>${reddeer-photon.site}</url>
-			<layout>p2</layout>
-		</repository>
-	</repositories>
-
 	<build>
 		<plugins>
 			<plugin>
