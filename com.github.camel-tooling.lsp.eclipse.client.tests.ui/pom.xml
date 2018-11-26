@@ -16,7 +16,4 @@
 		<module>plugins</module>
 		<module>tests</module>
 	</modules>
-	<properties>
-		<sonar.skip>true</sonar.skip>
-	</properties>
 </project>

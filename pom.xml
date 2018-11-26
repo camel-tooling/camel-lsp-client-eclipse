@@ -20,10 +20,10 @@
 		<!-- sonar properties -->
 		<sonar.code.codeCoveragePlugin>jacoco</sonar.code.codeCoveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<sonar.test.inclusions>**/*Test.*,**/test/**/*,**/*IT.*</sonar.test.inclusions>
+		<sonar.test.inclusions>**/*Test.*,**/tests/**/*,**/*IT.*,**/**reddeer**/**/*</sonar.test.inclusions>
 		<!-- points to the target folder of the global parent project -->
 		<sonar.jacoco.reportPath>../target/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.jacoco.itReportPath>../../../target/jacoco-it.exec</sonar.jacoco.itReportPath>
+		<sonar.jacoco.itReportPath>../target/jacoco-it.exec</sonar.jacoco.itReportPath>
 		<sonar.jacoco.reportPaths>${sonar.jacoco.reportPath},${sonar.jacoco.itReportPath}</sonar.jacoco.reportPaths>
 		<!-- UI Tests properties -->
 		<reddeer-photon.site>http://download.eclipse.org/reddeer/releases/2.3.0/</reddeer-photon.site>
