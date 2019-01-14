@@ -14,6 +14,7 @@
 	<packaging>eclipse-plugin</packaging>
 	
 	<properties>
+		<camel-lsp-server-version>1.1.0-SNAPSHOT</camel-lsp-server-version>
 		<tycho-version>0.26.0</tycho-version>
 	</properties>
 	
@@ -46,7 +47,7 @@
 						<artifactItem>
 							<groupId>com.github.camel-tooling</groupId>
 							<artifactId>camel-lsp-server</artifactId>
-							<version>${project.version}</version>
+							<version>${camel-lsp-server-version}</version>
 						</artifactItem>
 					</artifactItems>
 					<useBaseVersion>true</useBaseVersion>
