@@ -20,13 +20,14 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 import java.util.List;
 
-import org.eclipse.reddeer.common.wait.AbstractWait;
 import org.eclipse.reddeer.common.wait.TimePeriod;
+import org.eclipse.reddeer.common.wait.WaitWhile;
 import org.eclipse.reddeer.eclipse.jdt.ui.wizards.JavaProjectWizard;
 import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.reddeer.eclipse.wst.jsdt.ui.wizards.JavaProjectWizardFirstPage;
 import org.eclipse.reddeer.jface.text.contentassist.ContentAssistant;
 import org.eclipse.reddeer.junit.runner.RedDeerSuite;
+import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
 import org.eclipse.reddeer.swt.impl.ctab.DefaultCTabItem;
 import org.eclipse.reddeer.workbench.impl.editor.DefaultEditor;
 
@@ -73,15 +74,14 @@ public class CamelLSPCompletionTest extends DefaultTest {
 		createNewJavaProject(PROJECT_NAME);
 		new ProjectExplorer().selectProjects(PROJECT_NAME);
 		createNewEmptyXMLFile(CAMEL_CONTEXT);
-		DefaultEditor editor = new DefaultEditor(CAMEL_CONTEXT);
-		editor.activate();
+		new DefaultEditor(CAMEL_CONTEXT).activate();;
 		new DefaultCTabItem(EDITOR_SOURCE_TAB).activate();
 		EditorManipulator.copyFileContentToXMLEditor(RESOURCES_CONTEXT_PATH);
 	}
 
 	@After
 	public void cleanEditor() {
-		new DefaultEditor(CAMEL_CONTEXT).activate();
+		editor.activate();
 		EditorManipulator.copyFileContentToXMLEditor(RESOURCES_CONTEXT_PATH);
 	}
 
@@ -116,7 +116,7 @@ public class CamelLSPCompletionTest extends DefaultTest {
 		cursorPosition = editor.getText().indexOf("<from");
 		editor.setCursorPosition(cursorPosition += 42);
 		tryEndpointOptionsCompletion();
-
+	
 		cursorPosition = editor.getText().indexOf("<to");
 		editor.setCursorPosition(cursorPosition += 42);
 		tryEndpointOptionsCompletion();
@@ -150,9 +150,9 @@ public class CamelLSPCompletionTest extends DefaultTest {
 		editor = new SourceEditor();
 
 		cursorPosition = editor.getText().indexOf("<from");
-		editor.setCursorPosition(cursorPosition += 42);		
+		editor.setCursorPosition(cursorPosition += 42);
 		tryOptionsFiltering();
-		
+
 		cursorPosition = editor.getText().indexOf("<to");
 		editor.setCursorPosition(cursorPosition += 42);
 		tryOptionsFiltering();
@@ -183,7 +183,6 @@ public class CamelLSPCompletionTest extends DefaultTest {
 	}
 
 	private void assertComponentSchemes(List<String> proposals) {
-		AbstractWait.sleep(TimePeriod.MEDIUM);
 		collector.checkThat("Content assistant is empty", proposals.isEmpty(), equalTo(false));
 		collector.checkThat("Content assistant is not filtered", proposals.get(0).startsWith("f"), equalTo(true));
 	}
@@ -197,10 +196,9 @@ public class CamelLSPCompletionTest extends DefaultTest {
 		assistant = editor.openContentAssistant();
 		collector.checkThat(assistant.getProposals().isEmpty(), equalTo(false));
 		assistant.chooseProposal("InOnly");
-		AbstractWait.sleep(TimePeriod.MEDIUM);
-		if (editor.isDirty()) {
-			editor.save();
-		}
+		
+		new WaitWhile(new ShellIsAvailable(assistant), TimePeriod.MEDIUM);
+		editor.save();
 	}
 
 	private void tryAdditionalOptionsCompletion() {
@@ -209,12 +207,11 @@ public class CamelLSPCompletionTest extends DefaultTest {
 		assistant = editor.openContentAssistant();
 		collector.checkThat(assistant.getProposals().isEmpty(), equalTo(false));
 		assistant.chooseProposal("allowNullBody");
-		AbstractWait.sleep(TimePeriod.MEDIUM);
-		if (editor.isDirty()) {
-			editor.save();
-		}
+		
+		new WaitWhile(new ShellIsAvailable(assistant), TimePeriod.MEDIUM);
+		editor.save();
 	}
-	
+
 	private void tryOptionsFiltering() {
 		editor.insertText("?e");
 		editor.setCursorPosition(cursorPosition += 2);
@@ -225,14 +222,14 @@ public class CamelLSPCompletionTest extends DefaultTest {
 		collector.checkThat(assistant.getProposals().isEmpty(), equalTo(false));
 		assistant.chooseProposal("InOnly");
 		editor.insertText("&amp;e");
-		editor.setCursorPosition(cursorPosition += 27); 
+		editor.setCursorPosition(cursorPosition += 27);
 		assistant = editor.openContentAssistant();
 		collector.checkThat(assistant.getProposals().isEmpty(), equalTo(false));
 		collector.checkThat(assistant.getProposals().contains("exchangePattern"), equalTo(false));
 		assistant.close();
-		if (editor.isDirty()) {
-			editor.save();
-		}
+		
+		new WaitWhile(new ShellIsAvailable(assistant), TimePeriod.MEDIUM);
+		editor.save();
 	}
 
 }

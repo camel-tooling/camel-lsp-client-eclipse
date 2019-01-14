@@ -18,8 +18,12 @@ package com.github.cameltooling.lsp.reddeer.editor;
 
 import java.util.List;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.reddeer.common.util.Display;
+import org.eclipse.reddeer.common.util.ResultRunnable;
 import org.eclipse.reddeer.jface.text.contentassist.ContentAssistant;
 import org.eclipse.reddeer.swt.impl.styledtext.DefaultStyledText;
+import org.eclipse.reddeer.workbench.handler.EditorHandler;
 import org.eclipse.reddeer.workbench.impl.editor.DefaultEditor;
 
 /**
@@ -79,4 +83,31 @@ public class SourceEditor extends DefaultEditor {
 		assistant.close();
 		return proposals;
 	}
+	
+	@Override
+	public void activate() {
+		EditorHandler.getInstance().activate(editorPart);
+	}
+
+    public void save() {
+        log.debug("Saving editor");
+        Display.syncExec(new Runnable() {
+
+            @Override
+            public void run() {
+                editorPart.doSave(new NullProgressMonitor());
+            }
+        });
+    }
+    
+    public boolean isDirty() {
+        return Display.syncExec(new ResultRunnable<Boolean>() {
+
+            @Override
+            public Boolean run() {
+                return editorPart.isDirty();
+            }
+        });
+    }
+	
 }
