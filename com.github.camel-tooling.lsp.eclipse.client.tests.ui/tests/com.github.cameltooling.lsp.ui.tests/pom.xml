@@ -29,6 +29,7 @@
 		<testUIClass>CamelLSPCompletionTest</testUIClass>
 		<sonar.jacoco.reportPath>../../../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.jacoco.itReportPath>../../../target/jacoco-it.exec</sonar.jacoco.itReportPath>
+		<ui.tests.vmargs>-XX:+HeapDumpOnOutOfMemoryError</ui.tests.vmargs>
 	</properties>
 	
 	<build>
@@ -68,7 +69,7 @@
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>false</useUIThread>
 					<appArgLine>pluginCustomization ${customization.file} -clean -testpluginname com.github.cameltooling.lsp.ui.tests</appArgLine>
-					<argLine>${tycho.testArgLine} -XX:+HeapDumpOnOutOfMemoryError</argLine>
+					<argLine>${tycho.testArgLine} ${ui.tests.vmargs}</argLine>
 					<testSuite>com.github.cameltooling.lsp.ui.tests</testSuite>
 					<testClass>**/${testUIClass}</testClass>
 					<skip>${skipUITests}</skip>
@@ -100,4 +101,17 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>macos</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<properties>
+				<ui.tests.vmargs>-XX:+HeapDumpOnOutOfMemoryError -XstartOnFirstThread</ui.tests.vmargs>
+			</properties>
+		</profile>
+	</profiles>
 </project>
