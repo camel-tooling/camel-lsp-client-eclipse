@@ -31,18 +31,27 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.jface.text.tests.util.DisplayHelper;
 import org.eclipse.lsp4e.operations.completion.LSContentAssistProcessor;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.internal.genericeditor.ExtensionBasedTextEditor;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.ITextEditor;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CamelLSPLoadedByExtensionPointIT {
 	
 	private static final int ARBITRARY_NUMBER_OF_MINIMAL_CAMEL_COMPONENTS = 200;
+	private ICompletionProposal[] proposals;
+	
+	@Before
+	public void setup() {
+		proposals = null;
+	}
 
 	@Test
 	public void testGenericEditorProvideCompletion() throws Exception {
@@ -57,8 +66,17 @@ public class CamelLSPLoadedByExtensionPointIT {
 		
 		ITextViewer textViewer = getTextViewer(openEditor);
 		
-		ICompletionProposal[] proposals = new LSContentAssistProcessor().computeCompletionProposals(textViewer, 11);
-		assertThat(proposals.length).isGreaterThan(ARBITRARY_NUMBER_OF_MINIMAL_CAMEL_COMPONENTS);
+		new DisplayHelper() {
+			
+			LSContentAssistProcessor lsContentAssistProcessor = new LSContentAssistProcessor();
+
+			@Override
+			protected boolean condition() {
+				proposals = lsContentAssistProcessor.computeCompletionProposals(textViewer, 11);
+				return proposals.length > ARBITRARY_NUMBER_OF_MINIMAL_CAMEL_COMPONENTS;
+			}
+		}.waitForCondition(Display.getDefault(), 3000);
+		
 		checkContainsATimerProposal(proposals);
 	}
 
