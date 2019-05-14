@@ -23,6 +23,16 @@
             id="Camel LSP Server for XML"
             label="Camel LSP Server for XML">
       </server>
+      <contentTypeMapping
+            contentType="com.github.cameltooling.eclipse.camelk.groovy"
+            id="Camel LSP Server for Camel K groovy"
+            languageId="LANGUAGE_ID_APACHE_CAMEL">
+      </contentTypeMapping>
+      <server
+            class="com.github.cameltooling.eclipse.client.CamelLSPStreamConnectionProvider"
+            id="Camel LSP Server for Camel K groovy"
+            label="Camel LSP Server for Camel K groovy">
+      </server>
    </extension>
    <extension
          point="org.eclipse.wst.sse.ui.completionProposal">
@@ -48,6 +58,16 @@
             class="com.github.cameltooling.eclipse.java.completion.CamelCompletionProposalComputer"
             needsSortingAfterFiltering="false">
       </javaCompletionProposalComputer>
+   </extension>
+   <extension
+         point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            base-type="org.eclipse.core.runtime.text"
+            file-extensions="groovy"
+            id="com.github.cameltooling.eclipse.camelk.groovy"
+            name="Camel-K Groovy content type"
+            priority="normal">
+      </content-type>
    </extension>
 
 </plugin>
