@@ -43,6 +43,16 @@
             id="Camel LSP Server for Camel Kafka Connect"
             label="Camel LSP Server for Camel Kafka Connect">
       </server>
+      <server
+            class="com.github.cameltooling.eclipse.client.CamelLSPStreamConnectionProvider"
+            id="Camel LSP Server for Camel K Kotlin"
+            label="Camel LSP Server for Camel K Kotlin">
+      </server>
+      <contentTypeMapping
+            contentType="com.github.cameltooling.eclipse.camelk.kotlin"
+            id="Camel LSP Server for Camel K Kotlin"
+            languageId="LANGUAGE_ID_APACHE_CAMEL">
+      </contentTypeMapping>
    </extension>
    <extension
          point="org.eclipse.wst.sse.ui.completionProposal">
@@ -76,6 +86,13 @@
             file-extensions="groovy"
             id="com.github.cameltooling.eclipse.camelk.groovy"
             name="Camel-K Groovy content type"
+            priority="normal">
+      </content-type>
+      <content-type
+            base-type="org.eclipse.core.runtime.text"
+            file-extensions="kts"
+            id="com.github.cameltooling.eclipse.camelk.kotlin"
+            name="Camel-K Kotlin content type"
             priority="normal">
       </content-type>
    </extension>
