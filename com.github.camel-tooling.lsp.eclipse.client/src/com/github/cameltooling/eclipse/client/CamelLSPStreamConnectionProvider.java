@@ -18,6 +18,7 @@ package com.github.cameltooling.eclipse.client;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,10 +32,12 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.lsp4e.server.ProcessStreamConnectionProvider;
 import org.osgi.framework.Bundle;
 
+import com.github.cameltooling.eclipse.preferences.CamelLanguageServerPreferenceManager;
+
 public class CamelLSPStreamConnectionProvider extends ProcessStreamConnectionProvider {
 
 	private static final String DEBUG_FLAG = "debugLSPServer";
-	
+
 	public CamelLSPStreamConnectionProvider() {
 		super(computeCommands(), computeWorkingDir());
 	}
@@ -46,34 +49,42 @@ public class CamelLSPStreamConnectionProvider extends ProcessStreamConnectionPro
 	private static List<String> computeCommands() {
 		List<String> commands = new ArrayList<>();
 		commands.add("java");
-		if (isDebugEnabled()) commands.addAll(debugArguments());
+		if (isDebugEnabled())
+			commands.addAll(debugArguments());
 		commands.add("-jar");
 		commands.add(computeCamelLanguageServerJarPath());
 		return commands;
 	}
-	
+
 	private static String computeCamelLanguageServerJarPath() {
 		String camelLanguageServerJarPath = "";
 		Bundle bundle = Platform.getBundle(ActivatorCamelLspClient.ID);
 		URL fileURL = bundle.findEntries("/libs", "camel-lsp-server-*.jar", false).nextElement();
 		try {
-		    File file = new File(FileLocator.resolve(fileURL).toURI());
-		    if(Platform.OS_WIN32.equals(Platform.getOS())) {
-		    	camelLanguageServerJarPath = "\"" + file.getAbsolutePath() + "\"";
-		    } else {
-		    	camelLanguageServerJarPath = file.getAbsolutePath();
-		    }
+			File file = new File(FileLocator.resolve(fileURL).toURI());
+			if (Platform.OS_WIN32.equals(Platform.getOS())) {
+				camelLanguageServerJarPath = "\"" + file.getAbsolutePath() + "\"";
+			} else {
+				camelLanguageServerJarPath = file.getAbsolutePath();
+			}
 		} catch (URISyntaxException | IOException exception) {
-		    ActivatorCamelLspClient.getInstance().getLog().log(new Status(IStatus.ERROR, ActivatorCamelLspClient.ID, "Cannot get the Camel LSP Server jar.", exception)); //$NON-NLS-1$
+			ActivatorCamelLspClient.getInstance().getLog().log(new Status(IStatus.ERROR, ActivatorCamelLspClient.ID,
+					"Cannot get the Camel LSP Server jar.", exception)); //$NON-NLS-1$
 		}
 		return camelLanguageServerJarPath;
 	}
 
 	private static boolean isDebugEnabled() {
-		return Boolean.parseBoolean(System.getProperty(DEBUG_FLAG, "false"));		
+		return Boolean.parseBoolean(System.getProperty(DEBUG_FLAG, "false"));
 	}
-	
+
 	private static List<String> debugArguments() {
-		return Arrays.asList("-Xdebug","-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=3000");
+		return Arrays.asList("-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=3000");
 	}
+
+	@Override
+	public Object getInitializationOptions(URI rootUri) {
+		return new CamelLanguageServerPreferenceManager().getPreferenceAsLanguageServerFormat();
+	}
+
 }
