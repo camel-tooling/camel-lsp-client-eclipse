@@ -14,6 +14,8 @@ After you add this extension to your Eclipse IDE installation, when you use the 
    * Auto-completion for Camel components, attributes, and the list of attribute values
   
    * Quick reference documentation when you hover the cursor over a Camel component
+
+   * Provide a specific Camel catalog version through preferences
    
 When you use the XML or Java editor, only the auto-completion feature is provided.
 
