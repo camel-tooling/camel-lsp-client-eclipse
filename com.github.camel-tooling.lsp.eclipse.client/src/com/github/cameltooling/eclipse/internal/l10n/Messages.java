@@ -23,6 +23,7 @@ public class Messages extends NLS {
 	private static final String BASE_NAME = "com.github.cameltooling.eclipse.internal.l10n.messages";
 	public static String camelPreferencePageDescription;
 	public static String camelCatalogVersionSettings;
+	public static String camelAdditionalComponentSettings;
 	static {
 		NLS.initializeMessages(BASE_NAME, Messages.class);
 	}
