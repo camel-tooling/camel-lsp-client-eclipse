@@ -17,8 +17,10 @@
 package com.github.cameltooling.eclipse.preferences;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -36,7 +38,9 @@ public class CamelLanguageServerPreferencePage extends FieldEditorPreferencePage
 
 	@Override
 	protected void createFieldEditors() {
-		addField(new StringFieldEditor(CamelLanguageServerPreferenceManager.CAMEL_CATALOG_VERSION_PREF_KEY, Messages.camelCatalogVersionSettings, getFieldEditorParent()));
+		Composite fieldEditorParent = getFieldEditorParent();
+		fieldEditorParent.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
+		addField(new StringFieldEditor(CamelLanguageServerPreferenceManager.CAMEL_CATALOG_VERSION_PREF_KEY, Messages.camelCatalogVersionSettings, fieldEditorParent));
+		addField(new MultilineStringFieldEditor(CamelLanguageServerPreferenceManager.CAMEL_ADDITIONAL_COMPONENT_PREF_KEY, Messages.camelAdditionalComponentSettings, fieldEditorParent));
 	}
-
 }
