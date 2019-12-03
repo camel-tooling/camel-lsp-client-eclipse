@@ -43,23 +43,25 @@ public class CompletionUtil {
 				proposals = lsContentAssistProcessor.computeCompletionProposals(textViewer, position);
 				if(retrieveDisplayStringOfProposals(proposals)
 						.anyMatch(displayString -> displayString.contains("Computing proposals"))) {
+					System.out.println("Computing proposals...");
 					return false;
 				}
-				return count() == numberOfExpectedTextCompletion;
+				System.out.println("test condition");
+				System.out.println("Current proposals: "+ retrieveDisplayStringOfProposals(proposals).collect(Collectors.joining(";")));
+				return count(proposals, expectedTextCompletion) == numberOfExpectedTextCompletion;
 			}
 
-			private long count() {
-				return retrieveDisplayStringOfProposals(proposals)
-						.filter(displayString -> displayString.contains(expectedTextCompletion)).count();
-			}
 			
 		}.waitForCondition(Display.getDefault(), 10000);
 		
-		long count = retrieveDisplayStringOfProposals(proposals)
-						.filter(displayString -> displayString.contains(expectedTextCompletion)).count();
-		assertThat(count)
+		assertThat(count(proposals, expectedTextCompletion))
 			.as("Current proposals: "+ retrieveDisplayStringOfProposals(proposals).collect(Collectors.joining(";")))
 			.isEqualTo(numberOfExpectedTextCompletion);
+	}
+	
+	private long count(ICompletionProposal[] proposals, String expectedTextCompletion) {
+		return retrieveDisplayStringOfProposals(proposals)
+				.filter(displayString -> displayString.contains(expectedTextCompletion)).count();
 	}
 	
 	private Stream<String> retrieveDisplayStringOfProposals(ICompletionProposal[] proposals) {
