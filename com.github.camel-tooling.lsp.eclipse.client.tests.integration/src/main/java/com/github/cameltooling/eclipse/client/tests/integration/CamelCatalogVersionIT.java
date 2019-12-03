@@ -18,6 +18,7 @@ package com.github.cameltooling.eclipse.client.tests.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.eclipse.core.runtime.CoreException;
@@ -95,7 +96,9 @@ public class CamelCatalogVersionIT {
 		
 		long count = Stream.of(proposals).map(ICompletionProposal::getDisplayString)
 						.filter(displayString -> displayString.contains("jgroups-raft:clusterName")).count();
-		assertThat(count).isEqualTo(numberOfJgroupsRaftCompletion);
+		assertThat(count)
+			.as("Current proposals: "+ Stream.of(proposals).map(ICompletionProposal::getDisplayString).collect(Collectors.joining( ";" )))
+			.isEqualTo(numberOfJgroupsRaftCompletion);
 	}
 
 }
