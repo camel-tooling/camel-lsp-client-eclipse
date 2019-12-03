@@ -63,12 +63,12 @@ public class CamelLanguageServerPreferenceManager {
 		setPreferenceValue(camelVersion, CAMEL_CATALOG_VERSION_PREF_KEY);
 	}
 
-	private void setPreferenceValue(String camelVersion, String key) throws BackingStoreException {
+	private void setPreferenceValue(String value, String key) throws BackingStoreException {
 		IEclipsePreferences preferences = getCamelPreferenceNode();
-		if (camelVersion == null || camelVersion.isEmpty()) {
+		if (value == null || value.isEmpty()) {
 			preferences.remove(key);
 		} else {
-			preferences.put(key, camelVersion);
+			preferences.put(key, value);
 		}
 		preferences.flush();
 	}

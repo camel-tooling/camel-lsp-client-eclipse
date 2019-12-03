@@ -18,15 +18,8 @@ package com.github.cameltooling.eclipse.client.tests.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.ITextViewer;
-import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.jface.text.tests.util.DisplayHelper;
-import org.eclipse.lsp4e.operations.completion.LSContentAssistProcessor;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.junit.After;
 import org.junit.Before;
@@ -37,12 +30,11 @@ import com.github.cameltooling.eclipse.preferences.CamelLanguageServerPreference
 
 public class CamelAdditionalComponentIT {
 	
-	private ICompletionProposal[] proposals;
 	private TestSetupHelper testSetupHelper;
+	private CompletionUtil completionUtil = new CompletionUtil();
 
 	@Before
 	public void setup() {
-		proposals = null;
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeAllEditors(false);
 	}
 	
@@ -58,7 +50,7 @@ public class CamelAdditionalComponentIT {
 		testSetupHelper = new TestSetupHelper();
 		ITextViewer textViewer = testSetupHelper.createFileInProjectAndOpenInEditor(CamelAdditionalComponentIT.class.getSimpleName(), camelXmlFileContent);
 		String expectedTextCompletion = "acomponent:withsyntax";
-		checkAdditionalCompletion(textViewer, 0, expectedTextCompletion);
+		completionUtil.checkAdditionalCompletion(textViewer, 0, expectedTextCompletion, 11);
 		
 		String component = "[{\n" + 
 				" \"component\": {\n" + 
@@ -86,17 +78,17 @@ public class CamelAdditionalComponentIT {
 				"  }\n" + 
 				"}]";
 		
-		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeAllEditors(false);
+		assertThat(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeAllEditors(false)).isTrue();
 		new CamelLanguageServerPreferenceManager().setCamelAdditionalComponents(component);
 		textViewer = testSetupHelper.openGenericEditor();
 		
-		checkAdditionalCompletion(textViewer, 1, expectedTextCompletion);
+		completionUtil.checkAdditionalCompletion(textViewer, 1, expectedTextCompletion, 11);
 		
-		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeAllEditors(false);
+		assertThat(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeAllEditors(false)).isTrue();
 		new CamelLanguageServerPreferenceManager().setCamelAdditionalComponents(null);
 		textViewer = testSetupHelper.openGenericEditor();
 		
-		checkAdditionalCompletion(textViewer, 0, expectedTextCompletion);
+		completionUtil.checkAdditionalCompletion(textViewer, 0, expectedTextCompletion, 11);
 	}
 	
 	@Test
@@ -105,35 +97,7 @@ public class CamelAdditionalComponentIT {
 		String camelXmlFileContent = "<from uri=\"\" xmlns=\"http://camel.apache.org/schema/spring\"></from>\n";
 		testSetupHelper = new TestSetupHelper();
 		ITextViewer textViewer = testSetupHelper.createFileInProjectAndOpenInEditor(CamelAdditionalComponentIT.class.getSimpleName(), camelXmlFileContent);		
-		checkAdditionalCompletion(textViewer, 1, "timer:timerName");
+		completionUtil.checkAdditionalCompletion(textViewer, 1, "timer:timerName", 11);
 	}
 	
-	private void checkAdditionalCompletion(ITextViewer textViewer, long numberOfAdditionalCompletion, String expectedTextCompletion) {
-		new DisplayHelper() {
-
-			LSContentAssistProcessor lsContentAssistProcessor = new LSContentAssistProcessor();
-
-			@Override
-			protected boolean condition() {
-				proposals = lsContentAssistProcessor.computeCompletionProposals(textViewer, 11);
-				if(Stream.of(proposals).map(ICompletionProposal::getDisplayString)
-						.anyMatch(displayString -> displayString.contains("Computing proposals"))) {
-					return false;
-				}
-				return count() == numberOfAdditionalCompletion;
-			}
-
-			long count() {
-				return Stream.of(proposals).map(ICompletionProposal::getDisplayString)
-						.filter(displayString -> displayString.contains(expectedTextCompletion)).count();
-			}
-		}.waitForCondition(Display.getDefault(), 10000);
-		
-		long count = Stream.of(proposals).map(ICompletionProposal::getDisplayString)
-						.filter(displayString -> displayString.contains(expectedTextCompletion)).count();
-		assertThat(count)
-		.as("Current proposals: "+ Stream.of(proposals).map(ICompletionProposal::getDisplayString).collect(Collectors.joining( ";" )))
-		.isEqualTo(numberOfAdditionalCompletion);
-	}
-
 }
