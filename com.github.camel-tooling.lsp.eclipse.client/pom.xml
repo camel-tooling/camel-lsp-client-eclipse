@@ -14,7 +14,7 @@
 	<packaging>eclipse-plugin</packaging>
 	
 	<properties>
-		<camel-lsp-server-version>1.1.0-SNAPSHOT</camel-lsp-server-version>
+		<camel-lsp-server-version>1.2.0-SNAPSHOT</camel-lsp-server-version>
 		<tycho-version>0.26.0</tycho-version>
 	</properties>
 	
