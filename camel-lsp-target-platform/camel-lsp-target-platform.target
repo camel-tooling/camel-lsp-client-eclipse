@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target name="camel-lsp-eclipse" sequenceNumber="7">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.pde.feature.group" version="3.14.0.v20190605-1800"/>
-<unit id="org.eclipse.pde.source.feature.group" version="3.14.0.v20190605-1800"/>
-<unit id="org.eclipse.sdk.ide" version="4.12.0.I20190605-1800"/>
-<unit id="org.eclipse.sdk.tests.feature.group" version="4.12.0.v20190605-1800"/>
-<unit id="org.eclipse.test.feature.group" version="3.7.700.v20190527-1420"/>
-<unit id="org.eclipse.jface.text.tests" version="3.11.700.v20190519-2344"/>
-<repository location="https://download.eclipse.org/eclipse/updates/4.12/"/>
+<unit id="org.eclipse.pde.feature.group" version="3.14.400.v20200604-0540"/>
+<unit id="org.eclipse.pde.source.feature.group" version="3.14.400.v20200604-0540"/>
+<unit id="org.eclipse.sdk.ide" version="4.16.0.I20200604-0540"/>
+<unit id="org.eclipse.sdk.tests.feature.group" version="4.16.0.v20200604-0540"/>
+<unit id="org.eclipse.test.feature.group" version="3.7.1100.v20200513-0959"/>
+<unit id="org.eclipse.jface.text.tests" version="3.11.1100.v20200526-0915"/>
+<repository location="https://download.eclipse.org/eclipse/updates/4.16/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.assertj" version="1.7.1.v20170413-2026"/>
-<unit id="org.assertj.source" version="1.7.1.v20170413-2026"/>
-<repository location="https://download.eclipse.org/tools/orbit/R-builds/R20190602212107/repository"/>
+<unit id="org.assertj" version="3.14.0.v20200120-1926"/>
+<unit id="org.assertj.source" version="3.14.0.v20200120-1926"/>
+<repository location="https://download.eclipse.org/tools/orbit/R-builds/R20200529191137/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.lsp4e" version="0.10.0.201906060902"/>
-<unit id="org.eclipse.lsp4j.sdk.feature.group" version="0.7.2.v20190528-0935"/>
-<unit id="org.eclipse.wst.xml_ui.feature.feature.group" version="3.14.0.v201905291408"/>
-<repository location="https://download.eclipse.org/releases/2019-06"/>
+<unit id="org.eclipse.lsp4e" version="0.13.2.202006041453"/>
+<unit id="org.eclipse.lsp4j.sdk.feature.group" version="0.9.0.v20200229-1511"/>
+<unit id="org.eclipse.wst.xml_ui.feature.feature.group" version="3.19.0.v202007072044"/>
+<repository location="https://download.eclipse.org/releases/2020-09"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.reddeer.codegen.feature.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.eclipse.feature.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.eclipse.feature.source.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.gef.spy.feature.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.graphiti.feature.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.graphiti.feature.source.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.logparser.feature.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.logparser.feature.source.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.recorder.feature.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.recorder.feature.source.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.spy.feature.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.swt.feature.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.swt.feature.source.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.ui.feature.feature.group" version="2.6.0.v20190612-1247"/>
-<unit id="org.eclipse.reddeer.ui.feature.source.feature.group" version="2.6.0.v20190612-1247"/>
-<repository location="https://download.eclipse.org/reddeer/releases/2.6.0"/>
+<unit id="org.eclipse.reddeer.codegen.feature.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.eclipse.feature.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.eclipse.feature.source.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.gef.spy.feature.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.graphiti.feature.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.graphiti.feature.source.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.logparser.feature.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.logparser.feature.source.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.recorder.feature.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.recorder.feature.source.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.spy.feature.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.swt.feature.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.swt.feature.source.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.ui.feature.feature.group" version="3.0.0.v20200610-1810"/>
+<unit id="org.eclipse.reddeer.ui.feature.source.feature.group" version="3.0.0.v20200610-1810"/>
+<repository location="https://download.eclipse.org/reddeer/releases/3.0.0"/>
 </location>
 </locations>
 </target>

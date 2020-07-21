@@ -9,7 +9,7 @@ before_install:
 - "export IS_SNAPSHOT=`grep '<version>' pom.xml -m 1 | cut -d'>' -f 2 | cut -d'<' -f 1 | cut -d'-' -f 2`"
 script: mvn clean verify
 jdk: 
-- openjdk8
+- openjdk11
 cache:
   directories:
   - $HOME/.m2
