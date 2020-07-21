@@ -70,6 +70,6 @@ public class CamelLSPLoadedByExtensionPointIT {
 		assertThat(Stream.of(proposals)
 			.map(ICompletionProposal::getDisplayString)
 			.filter(displayString -> displayString.contains("timer"))
-			.findFirst().get()).isNotNull();
+			.findFirst()).isNotEmpty();
 	}
 }
