@@ -55,6 +55,6 @@ and in IDE create a configuration for Remote Java Application in Run > Debug Con
 ### Executing tests from IDE
 
 1. Install Camel Tooling LSP Eclipse client, e.g from https://camel-tooling.github.io/camel-lsp-client-eclipse-update-site/updatesite/nightly/
-2. Install RedDeer 2.x, e.g. from http://download.eclipse.org/reddeer/releases/2.3.0/
+2. Install RedDeer 3.x, e.g. from http://download.eclipse.org/reddeer/releases/3.1.0/
 3. Import the tests as Existing Projects into Workspace
 4. Now, we can launch 'RedDeer Test' which is available in Run configuration
