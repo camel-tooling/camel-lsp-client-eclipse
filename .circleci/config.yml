@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:11-stretch
+      - image: circleci/openjdk:11-stretch-browsers
     steps:
       - checkout
       - run:
