@@ -10,7 +10,7 @@ jobs:
           command: mvn clean verify
       - when:
           condition:
-            equal: [circleci-project-setup, << pipeline.git.branch >>]
+            equal: [master, << pipeline.git.branch >>]
           steps:
             - run:
                 name: Sonar Analysis
