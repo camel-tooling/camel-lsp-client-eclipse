@@ -18,7 +18,7 @@ jobs:
                   mvn sonar:sonar
                   -Dsonar.login=${SONAR_TOKEN}
                   -Dsonar.projectKey="camel-lsp-client-eclipse"
-                  -Dsonar.projectName="Eclipse Client for Apache Camel Language Server";
+                  -Dsonar.projectName="Eclipse Client for Apache Camel Language Server"
                   -Dsonar.host.url=https://sonarcloud.io
             - run:
                 name: Prepare update site
