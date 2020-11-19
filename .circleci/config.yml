@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  sonarcloud: sonarsource/sonarcloud@1.0.2
-
 jobs:
   build:
     docker:
@@ -16,8 +13,6 @@ jobs:
           steps:
             - run:
                 command: mvn sonar:sonar -Dsonar.login=${SONAR_TOKEN} -Dsonar.projectKey="camel-lsp-client-eclipse" -Dsonar.projectName="Eclipse Client for Apache Camel Language Server";
-
-
 
 workflows:
   camel-lsp-client-eclipse:
