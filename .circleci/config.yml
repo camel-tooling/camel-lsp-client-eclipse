@@ -23,7 +23,7 @@ jobs:
                   -Dsonar.host.url=https://sonarcloud.io
             - run:
                 name: Prepare update site
-                command: >
+                command: |
                   echo "export PLUGIN_VERSION=`grep '<version>' pom.xml -m 1 | cut -d'>' -f 2 | cut -d'<' -f 1`" >> $BASH_ENV
                   echo $PLUGIN_VERSION
                   echo "export IS_SNAPSHOT=`grep '<version>' pom.xml -m 1 | cut -d'>' -f 2 | cut -d'<' -f 1 | cut -d'-' -f 2`" >> $BASH_ENV
