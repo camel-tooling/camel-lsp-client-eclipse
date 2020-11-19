@@ -25,7 +25,8 @@ jobs:
                 name: Prepare environment variable for update site generation
                 command: |
                   echo "export PLUGIN_VERSION=`grep '<version>' pom.xml -m 1 | cut -d'>' -f 2 | cut -d'<' -f 1`" >> $BASH_ENV
-                  echo "export IS_SNAPSHOT=`grep '<version>' pom.xml -m 1 | cut -d'>' -f 2 | cut -d'<' -f 1 | cut -d'-' -f 2`" >> $BASH_ENV
+                  export IS_SNAPSHOT=`grep '<version>' pom.xml -m 1 | cut -d'>' -f 2 | cut -d'<' -f 1 | cut -d'-' -f 2`
+                  echo IS_SNAPSHOT=$IS_SNAPSHOT >> $BASH_ENV
                   if [[ $IS_SNAPSHOT == "SNAPSHOT" ]]; then echo 'export DEPLOY_REPO_ROOT=nightly' >> $BASH_ENV; else echo 'export DEPLOY_REPO_ROOT=stable' >> $BASH_ENV; fi
             - run:
                 name: Prepare update site
