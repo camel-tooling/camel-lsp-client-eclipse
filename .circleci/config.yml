@@ -12,14 +12,16 @@ jobs:
           command: mvn clean verify
       - when:
           condition:
-            equal: [master, << pipeline.git.branch >>]
+            equal: [circleci-project-setup, << pipeline.git.branch >>]
           steps:
-            - sonarcloud/scan
+            - run:
+                command: mvn sonar:sonar -Dsonar.login=${SONAR_TOKEN} -Dsonar.projectKey="camel-lsp-client-eclipse" -Dsonar.projectName="Eclipse Client for Apache Camel Language Server";
 
 
 
 workflows:
   camel-lsp-client-eclipse:
     jobs:
-      - build
+      - build:
+          context: sonarcloud
 
