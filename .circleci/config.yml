@@ -30,9 +30,6 @@ jobs:
             - run:
                 name: Prepare update site
                 command: |
-                  echo $PLUGIN_VERSION
-                  echo $IS_SNAPSHOT
-                  echo $DEPLOY_REPO_ROOT
                   mkdir com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/
                   mkdir com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/${DEPLOY_REPO_ROOT}/
                   mv com.github.camel-tooling.lsp.eclipse.updatesite/target/repository/* com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/${DEPLOY_REPO_ROOT}/
@@ -41,7 +38,7 @@ jobs:
                   cp website/index.html com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/${DEPLOY_REPO_ROOT}/
       - store_artifacts:
            name: Store log of UI tests
-           path: /home/circleci/project/com.github.camel-tooling.lsp.eclipse.client.tests.ui/tests/com.github.cameltooling.lsp.ui.tests/target/work/data/.metadata/
+           path: /home/circleci/project/com.github.camel-tooling.lsp.eclipse.client.tests.ui/tests/com.github.cameltooling.lsp.ui.tests/target/work/data/.metadata/.log
       - store_artifacts:
            name: Store update site
            path: com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/
