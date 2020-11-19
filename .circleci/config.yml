@@ -1,10 +1,25 @@
 version: 2.1
 
 orbs:
-  maven: circleci/maven@1.0.3
+  sonarcloud: sonarsource/sonarcloud@1.0.2
 
-workflows:
-  maven_test:
-    jobs:
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:11-stretch
+    steps:
       - run:
           command: mvn clean verify
+      - when:
+          condition:
+            equal: [master, << pipeline.git.branch >>]
+          steps:
+            - sonarcloud/scan
+
+
+
+workflows:
+  camel-lsp-client-eclipse:
+    jobs:
+      - build
+
