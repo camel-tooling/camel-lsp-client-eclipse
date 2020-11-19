@@ -13,8 +13,27 @@ jobs:
             equal: [circleci-project-setup, << pipeline.git.branch >>]
           steps:
             - run:
+                name: Sonar Analysis
                 command: mvn sonar:sonar -Dsonar.login=${SONAR_TOKEN} -Dsonar.projectKey="camel-lsp-client-eclipse" -Dsonar.projectName="Eclipse Client for Apache Camel Language Server";
-
+            - run:
+                name: Prepare update site
+                command: |
+                  echo "export PLUGIN_VERSION=`grep '<version>' pom.xml -m 1 | cut -d'>' -f 2 | cut -d'<' -f 1`" >> $BASH_ENV
+                  echo "export IS_SNAPSHOT=`grep '<version>' pom.xml -m 1 | cut -d'>' -f 2 | cut -d'<' -f 1 | cut -d'-' -f 2`" >> $BASH_ENV
+                  if [[ $IS_SNAPSHOT == "SNAPSHOT" ]]; then
+                   echo 'export DEPLOY_REPO_ROOT=nightly' >> $BASH_ENV
+                  else
+                   echo 'export DEPLOY_REPO_ROOT=stable' >> $BASH_ENV
+                  fi
+                  echo $DEPLOY_REPO_ROOT
+                  mkdir com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/
+                  mkdir com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/${DEPLOY_REPO_ROOT}/
+                  mv com.github.camel-tooling.lsp.eclipse.updatesite/target/repository/* com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/${DEPLOY_REPO_ROOT}/
+                  find website/* -name 'index.html' | xargs perl -pi -e "s/##VERSION##/${PLUGIN_VERSION}/g"
+                  find website/* -name 'index.html' | xargs perl -pi -e "s/##TYPE##/${DEPLOY_REPO_ROOT}/g"
+                  cp website/index.html com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/${DEPLOY_REPO_ROOT}/
+      - store_artifacts:
+           path: /home/circleci/project/com.github.camel-tooling.lsp.eclipse.client.tests.ui/tests/com.github.cameltooling.lsp.ui.tests/target/work/data/.metadata/
 workflows:
   camel-lsp-client-eclipse:
     jobs:
