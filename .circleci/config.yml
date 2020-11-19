@@ -28,11 +28,7 @@ jobs:
                   echo $PLUGIN_VERSION
                   echo "export IS_SNAPSHOT=`grep '<version>' pom.xml -m 1 | cut -d'>' -f 2 | cut -d'<' -f 1 | cut -d'-' -f 2`" >> $BASH_ENV
                   echo $IS_SNAPSHOT
-                  if [[ $IS_SNAPSHOT == "SNAPSHOT" ]]; then
-                   echo 'export DEPLOY_REPO_ROOT=nightly' >> $BASH_ENV
-                  else
-                   echo 'export DEPLOY_REPO_ROOT=stable' >> $BASH_ENV
-                  fi
+                  if [[ $IS_SNAPSHOT == "SNAPSHOT" ]]; then echo 'export DEPLOY_REPO_ROOT=nightly' >> $BASH_ENV; else echo 'export DEPLOY_REPO_ROOT=stable' >> $BASH_ENV; fi
                   echo $DEPLOY_REPO_ROOT
                   mkdir com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/
                   mkdir com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/${DEPLOY_REPO_ROOT}/
