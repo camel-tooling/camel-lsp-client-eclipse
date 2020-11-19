@@ -38,6 +38,7 @@ jobs:
                   find website/* -name 'index.html' | xargs perl -pi -e "s/##TYPE##/${DEPLOY_REPO_ROOT}/g"
                   cp website/index.html com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/${DEPLOY_REPO_ROOT}/
       - store_artifacts:
+           name: Store log of UI tests
            path: /home/circleci/project/com.github.camel-tooling.lsp.eclipse.client.tests.ui/tests/com.github.cameltooling.lsp.ui.tests/target/work/data/.metadata/
 workflows:
   camel-lsp-client-eclipse:
