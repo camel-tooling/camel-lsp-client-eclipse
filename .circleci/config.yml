@@ -37,6 +37,9 @@ jobs:
                   find website/* -name 'index.html' | xargs perl -pi -e "s/##VERSION##/${PLUGIN_VERSION}/g"
                   find website/* -name 'index.html' | xargs perl -pi -e "s/##TYPE##/${DEPLOY_REPO_ROOT}/g"
                   cp -v website/index.html com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/${DEPLOY_REPO_ROOT}/
+            - run:
+                name: Publish update site
+                command: bash .circleci/publish.sh
             - store_artifacts:
                  name: Store update site
                  path: com.github.camel-tooling.lsp.eclipse.updatesite/target/updatesite/
