@@ -35,13 +35,13 @@
       </server>
       <contentTypeMapping
             contentType="org.eclipse.jdt.core.javaProperties"
-            id="Camel LSP Server for Camel Kafka Connect"
+            id="Camel LSP Server for Properties files"
             languageId="LANGUAGE_ID_APACHE_CAMEL">
       </contentTypeMapping>
       <server
             class="com.github.cameltooling.eclipse.client.CamelLSPStreamConnectionProvider"
-            id="Camel LSP Server for Camel Kafka Connect"
-            label="Camel LSP Server for Camel Kafka Connect">
+            id="Camel LSP Server for Properties files"
+            label="Camel LSP Server for Properties files (Camel Kafka Connector and Camel on SpringBoot)">
       </server>
       <server
             class="com.github.cameltooling.eclipse.client.CamelLSPStreamConnectionProvider"
