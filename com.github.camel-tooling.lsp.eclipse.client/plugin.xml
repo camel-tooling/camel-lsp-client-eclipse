@@ -106,28 +106,28 @@
             base-type="org.eclipse.core.runtime.text"
             file-extensions="groovy"
             id="com.github.cameltooling.eclipse.camelk.groovy"
-            name="Camel-K Groovy content type"
+            name="Camel K Groovy content type"
             priority="normal">
       </content-type>
       <content-type
             base-type="org.eclipse.core.runtime.text"
             file-extensions="kts"
             id="com.github.cameltooling.eclipse.camelk.kotlin"
-            name="Camel-K Kotlin content type"
+            name="Camel K Kotlin content type"
             priority="normal">
       </content-type>
       <content-type
             base-type="org.eclipse.core.runtime.text"
             file-extensions="js"
             id="com.github.cameltooling.eclipse.camelk.javascript"
-            name="Camel-K JavaScript content type"
+            name="Camel K JavaScript content type"
             priority="normal">
       </content-type>
 	  <content-type
             base-type="org.eclipse.core.runtime.text"
             file-extensions="yaml"
             id="com.github.cameltooling.eclipse.camelk.yaml"
-            name="Camel-K YAML content type"
+            name="Camel K YAML content type"
             priority="normal">
       </content-type>
    </extension>
