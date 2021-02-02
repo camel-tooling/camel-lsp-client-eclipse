@@ -24,6 +24,7 @@ public class Messages extends NLS {
 	public static String camelPreferencePageDescription;
 	public static String camelCatalogVersionSettings;
 	public static String camelAdditionalComponentSettings;
+	public static String camelCatalogRuntimeProviderSettings;
 	static {
 		NLS.initializeMessages(BASE_NAME, Messages.class);
 	}

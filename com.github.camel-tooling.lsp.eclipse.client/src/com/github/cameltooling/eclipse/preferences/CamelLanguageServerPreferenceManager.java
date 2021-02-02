@@ -35,12 +35,14 @@ public class CamelLanguageServerPreferenceManager {
 	private static final String TOP_NODE_CAMEL_KEY = "camel";
 	static final String CAMEL_CATALOG_VERSION_PREF_KEY = "Camel catalog version";
 	static final String CAMEL_ADDITIONAL_COMPONENT_PREF_KEY = "extra-components";
+	static final String CAMEL_CATALOG_RUNTIME_PROVIDER_PREF_KEY = "Camel catalog runtime provider";
 
 	public Map<String, Map<String, Object>> getPreferenceAsLanguageServerFormat() {
 		IEclipsePreferences preferences = getCamelPreferenceNode();
 		Map<String, Map<String, Object>> settings = new HashMap<>();
 		Map<String, Object> camelSettings = new HashMap<>();
 		camelSettings.put(CAMEL_CATALOG_VERSION_PREF_KEY, preferences.get(CAMEL_CATALOG_VERSION_PREF_KEY, null));
+		camelSettings.put(CAMEL_CATALOG_RUNTIME_PROVIDER_PREF_KEY, preferences.get(CAMEL_CATALOG_RUNTIME_PROVIDER_PREF_KEY, null));
 		camelSettings.put(CAMEL_ADDITIONAL_COMPONENT_PREF_KEY, getAdditionalComponentIfValid(preferences));
 		settings.put(TOP_NODE_CAMEL_KEY, camelSettings );
 		return settings;
@@ -79,5 +81,9 @@ public class CamelLanguageServerPreferenceManager {
 
 	private IEclipsePreferences getCamelPreferenceNode() {
 		return InstanceScope.INSTANCE.getNode(ActivatorCamelLspClient.ID);
+	}
+
+	public void setRuntimeProvider(String runtimeProvider) throws BackingStoreException {
+		setPreferenceValue(runtimeProvider, CAMEL_CATALOG_RUNTIME_PROVIDER_PREF_KEY);
 	}
 }

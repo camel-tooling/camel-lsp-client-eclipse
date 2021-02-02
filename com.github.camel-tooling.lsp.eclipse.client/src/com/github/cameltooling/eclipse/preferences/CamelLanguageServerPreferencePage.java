@@ -18,6 +18,7 @@ package com.github.cameltooling.eclipse.preferences;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.swt.widgets.Composite;
@@ -27,6 +28,7 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import com.github.cameltooling.eclipse.client.ActivatorCamelLspClient;
 import com.github.cameltooling.eclipse.internal.l10n.Messages;
+import com.github.cameltooling.eclipse.preferences.runtimeprovider.CamelRuntimeProvider;
 
 public class CamelLanguageServerPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
@@ -41,6 +43,9 @@ public class CamelLanguageServerPreferencePage extends FieldEditorPreferencePage
 		Composite fieldEditorParent = getFieldEditorParent();
 		fieldEditorParent.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
 		addField(new StringFieldEditor(CamelLanguageServerPreferenceManager.CAMEL_CATALOG_VERSION_PREF_KEY, Messages.camelCatalogVersionSettings, fieldEditorParent));
+		addField(new ComboFieldEditor(CamelLanguageServerPreferenceManager.CAMEL_CATALOG_RUNTIME_PROVIDER_PREF_KEY, Messages.camelCatalogRuntimeProviderSettings,
+				CamelRuntimeProvider.getComboFieldEditorInputs(),
+				fieldEditorParent));
 		addField(new MultilineStringFieldEditor(CamelLanguageServerPreferenceManager.CAMEL_ADDITIONAL_COMPONENT_PREF_KEY, Messages.camelAdditionalComponentSettings, fieldEditorParent));
 	}
 }

@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,22 +14,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.eclipse.client.tests.integration;
+package com.github.cameltooling.eclipse.preferences.runtimeprovider;
 
-import org.osgi.service.prefs.BackingStoreException;
-
-import com.github.cameltooling.eclipse.preferences.CamelLanguageServerPreferenceManager;
-
-public class CamelCatalogVersionIT extends AbtractPreferencesIT {
-
-	private static final String A_CAMEL_CATALOG_VERSION_WITHOUT_JGROUPSRAFT_COMPONENT = "2.22.0";
-
-	protected void setBackPreference() throws BackingStoreException {
-		new CamelLanguageServerPreferenceManager().setCamelCatalogVersion("");
+public enum CamelRuntimeProvider {
+	DEFAULT,
+	KARAF,
+	SPRINGBOOT,
+	QUARKUS;
+	
+	@Override
+	public String toString() {
+		switch (this) {
+		case DEFAULT:
+			return "Default";
+		case KARAF:
+			return "Karaf";
+		case SPRINGBOOT:
+			return "Spring Boot";
+		case QUARKUS:
+			return "Quarkus";
+		}
+		return super.toString();
 	}
 	
-	protected void updatePreference() throws BackingStoreException {
-		new CamelLanguageServerPreferenceManager().setCamelCatalogVersion(A_CAMEL_CATALOG_VERSION_WITHOUT_JGROUPSRAFT_COMPONENT);
+	public static String[][] getComboFieldEditorInputs(){
+		return new String[][] {
+			new String[] {DEFAULT.toString(), DEFAULT.name()},
+			new String[] {SPRINGBOOT.toString(), SPRINGBOOT.name()},
+			new String[] {QUARKUS.toString(), QUARKUS.name()},
+			new String[] {KARAF.toString(), KARAF.name()},
+		};
 	}
-
+	
 }
