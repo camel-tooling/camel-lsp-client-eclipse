@@ -6,7 +6,7 @@
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,17 +19,16 @@ package com.github.cameltooling.eclipse.client.tests.integration;
 import org.osgi.service.prefs.BackingStoreException;
 
 import com.github.cameltooling.eclipse.preferences.CamelLanguageServerPreferenceManager;
+import com.github.cameltooling.eclipse.preferences.runtimeprovider.CamelRuntimeProvider;
 
-public class CamelCatalogVersionIT extends AbtractPreferencesIT {
-
-	private static final String A_CAMEL_CATALOG_VERSION_WITHOUT_JGROUPSRAFT_COMPONENT = "2.22.0";
+public class CamelRuntimeProviderIT extends AbtractPreferencesIT {
 
 	protected void setBackPreference() throws BackingStoreException {
-		new CamelLanguageServerPreferenceManager().setCamelCatalogVersion("");
+		new CamelLanguageServerPreferenceManager().setRuntimeProvider(CamelRuntimeProvider.DEFAULT.name());
 	}
 	
 	protected void updatePreference() throws BackingStoreException {
-		new CamelLanguageServerPreferenceManager().setCamelCatalogVersion(A_CAMEL_CATALOG_VERSION_WITHOUT_JGROUPSRAFT_COMPONENT);
+		new CamelLanguageServerPreferenceManager().setRuntimeProvider(CamelRuntimeProvider.KARAF.name());
 	}
-
+	
 }

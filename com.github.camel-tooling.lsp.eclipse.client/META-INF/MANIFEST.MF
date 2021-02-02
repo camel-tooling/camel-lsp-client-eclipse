@@ -14,6 +14,7 @@ Require-Bundle: org.eclipse.lsp4e;bundle-version="0.6.0",
  org.eclipse.ui;bundle-version="3.113.0",
  com.google.gson;bundle-version="2.7.0"
 Export-Package: com.github.cameltooling.eclipse.client;x-friends:="com.github.camel-tooling.eclipse.client.tests.integration",
- com.github.cameltooling.eclipse.preferences
+ com.github.cameltooling.eclipse.preferences,
+ com.github.cameltooling.eclipse.preferences.runtimeprovider
 Eclipse-BundleShape: dir
 Bundle-Activator: com.github.cameltooling.eclipse.client.ActivatorCamelLspClient
