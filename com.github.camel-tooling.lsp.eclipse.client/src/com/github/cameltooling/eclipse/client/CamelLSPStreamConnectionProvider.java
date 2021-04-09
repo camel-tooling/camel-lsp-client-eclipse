@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.URIUtil;
 import org.eclipse.lsp4e.server.ProcessStreamConnectionProvider;
 import org.osgi.framework.Bundle;
 
@@ -61,7 +62,8 @@ public class CamelLSPStreamConnectionProvider extends ProcessStreamConnectionPro
 		Bundle bundle = Platform.getBundle(ActivatorCamelLspClient.ID);
 		URL fileURL = bundle.findEntries("/libs", "camel-lsp-server-*.jar", false).nextElement();
 		try {
-			File file = new File(FileLocator.resolve(fileURL).toURI());
+			URL resolvedUrl = FileLocator.resolve(fileURL);
+			File file = new File(URIUtil.toURI(resolvedUrl));
 			if (Platform.OS_WIN32.equals(Platform.getOS())) {
 				camelLanguageServerJarPath = "\"" + file.getAbsolutePath() + "\"";
 			} else {
