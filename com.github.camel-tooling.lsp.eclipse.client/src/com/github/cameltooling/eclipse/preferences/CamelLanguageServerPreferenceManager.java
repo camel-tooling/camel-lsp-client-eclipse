@@ -36,6 +36,7 @@ public class CamelLanguageServerPreferenceManager {
 	static final String CAMEL_CATALOG_VERSION_PREF_KEY = "Camel catalog version";
 	static final String CAMEL_ADDITIONAL_COMPONENT_PREF_KEY = "extra-components";
 	static final String CAMEL_CATALOG_RUNTIME_PROVIDER_PREF_KEY = "Camel catalog runtime provider";
+	public static final String KAFKA_CONNECTION_URL = "Kafka Connection URL";
 
 	public Map<String, Map<String, Object>> getPreferenceAsLanguageServerFormat() {
 		IEclipsePreferences preferences = getCamelPreferenceNode();
@@ -44,6 +45,7 @@ public class CamelLanguageServerPreferenceManager {
 		camelSettings.put(CAMEL_CATALOG_VERSION_PREF_KEY, preferences.get(CAMEL_CATALOG_VERSION_PREF_KEY, null));
 		camelSettings.put(CAMEL_CATALOG_RUNTIME_PROVIDER_PREF_KEY, preferences.get(CAMEL_CATALOG_RUNTIME_PROVIDER_PREF_KEY, null));
 		camelSettings.put(CAMEL_ADDITIONAL_COMPONENT_PREF_KEY, getAdditionalComponentIfValid(preferences));
+		camelSettings.put(KAFKA_CONNECTION_URL, preferences.get(KAFKA_CONNECTION_URL, "localhost:9092"));
 		settings.put(TOP_NODE_CAMEL_KEY, camelSettings );
 		return settings;
 	}

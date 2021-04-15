@@ -17,6 +17,8 @@ After you add this extension to your Eclipse IDE installation, when you use the 
 
    * Provide a specific Camel catalog version through preferences
    
+   * Specify Kafka connection URl through preferences for dynamic completion on Camel kafka component
+   
 When you use the XML or Java editor, only the auto-completion feature is provided.
 
 For detailed information about Apache Camel supported features, see the [Language Server GitHub page](https://github.com/camel-tooling/camel-language-server#features).

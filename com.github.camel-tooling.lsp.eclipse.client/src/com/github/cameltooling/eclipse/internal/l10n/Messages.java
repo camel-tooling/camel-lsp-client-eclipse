@@ -25,6 +25,7 @@ public class Messages extends NLS {
 	public static String camelCatalogVersionSettings;
 	public static String camelAdditionalComponentSettings;
 	public static String camelCatalogRuntimeProviderSettings;
+	public static String kafkaConnectionUrlSettings;
 	static {
 		NLS.initializeMessages(BASE_NAME, Messages.class);
 	}
