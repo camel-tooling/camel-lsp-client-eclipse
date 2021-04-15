@@ -47,5 +47,6 @@ public class CamelLanguageServerPreferencePage extends FieldEditorPreferencePage
 				CamelRuntimeProvider.getComboFieldEditorInputs(),
 				fieldEditorParent));
 		addField(new MultilineStringFieldEditor(CamelLanguageServerPreferenceManager.CAMEL_ADDITIONAL_COMPONENT_PREF_KEY, Messages.camelAdditionalComponentSettings, fieldEditorParent));
+		addField(new StringFieldEditor(CamelLanguageServerPreferenceManager.KAFKA_CONNECTION_URL, Messages.kafkaConnectionUrlSettings, fieldEditorParent));
 	}
 }
