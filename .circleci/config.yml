@@ -49,6 +49,9 @@ jobs:
       - store_artifacts:
            name: Store screenshots of UI tests
            path: /home/circleci/project/com.github.camel-tooling.lsp.eclipse.client.tests.ui/tests/com.github.cameltooling.lsp.ui.tests/target/screenshots
+      - store_artifacts:
+           name: Store Camel LS log
+           path: /tmp/log-camel-lsp.out
 
 workflows:
   camel-lsp-client-eclipse:
