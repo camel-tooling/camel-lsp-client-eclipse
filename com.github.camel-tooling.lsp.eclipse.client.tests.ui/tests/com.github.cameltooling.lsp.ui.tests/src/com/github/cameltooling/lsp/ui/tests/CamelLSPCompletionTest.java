@@ -20,6 +20,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 import java.util.List;
 
+import org.eclipse.reddeer.common.properties.RedDeerProperties;
 import org.eclipse.reddeer.common.wait.TimePeriod;
 import org.eclipse.reddeer.common.wait.WaitWhile;
 import org.eclipse.reddeer.eclipse.jdt.ui.wizards.JavaProjectWizard;
@@ -38,6 +39,7 @@ import com.github.cameltooling.lsp.reddeer.wizard.NewXMLFileWizard;
 import com.github.cameltooling.lsp.ui.tests.utils.EditorManipulator;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,10 +66,12 @@ public class CamelLSPCompletionTest extends DefaultTest {
 	public static final String INSERT_SPACE = " ";
 	public static final String RESOURCES_CONTEXT_PATH = "resources/camel-context-cbr.xml";
 	public static final String EDITOR_SOURCE_TAB = "Source";
+	private static final String TIMEOUT_PERIOD_FACTOR_PROPETY_NAME = RedDeerProperties.TIME_PERIOD_FACTOR.getName();
 
 	private SourceEditor editor;
 	private ContentAssistant assistant;
 	private int cursorPosition;
+	private String timePeriodfactor;
 
 	@BeforeClass
 	public static void prepareEnvironment() {
@@ -77,12 +81,26 @@ public class CamelLSPCompletionTest extends DefaultTest {
 		new DefaultEditor(CAMEL_CONTEXT).activate();;
 		new DefaultCTabItem(EDITOR_SOURCE_TAB).activate();
 		EditorManipulator.copyFileContentToXMLEditor(RESOURCES_CONTEXT_PATH);
+		
+	}
+	
+	@Before
+	public void setup() {
+		timePeriodfactor = System.getProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
+		System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, "3");
+		TimePeriod.updateFactor();
 	}
 
 	@After
-	public void cleanEditor() {
+	public void tearDown() {
 		editor.activate();
 		EditorManipulator.copyFileContentToXMLEditor(RESOURCES_CONTEXT_PATH);
+		if(timePeriodfactor != null) {
+			System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, timePeriodfactor);
+		} else {
+			System.clearProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
+		}
+		TimePeriod.updateFactor();
 	}
 
 	@Rule
