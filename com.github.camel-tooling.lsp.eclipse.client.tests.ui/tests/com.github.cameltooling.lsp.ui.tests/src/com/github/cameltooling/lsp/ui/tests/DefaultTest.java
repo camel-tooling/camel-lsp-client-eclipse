@@ -16,6 +16,11 @@
  */
 package com.github.cameltooling.lsp.ui.tests;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.reddeer.common.logging.Logger;
 import org.eclipse.reddeer.eclipse.ui.views.log.LogView;
 import org.eclipse.reddeer.requirements.cleanerrorlog.CleanErrorLogRequirement;
@@ -29,6 +34,8 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.rules.TestWatcher;
 
 /**
  * Prepares environment for UI testing
@@ -40,7 +47,21 @@ import org.junit.BeforeClass;
 public abstract class DefaultTest {
 
 	private static Logger log = Logger.getLogger(DefaultTest.class);
+	
+	@Rule
+	public final TestWatcher watchman = new TestWatcher() {
 
+		@Override
+		protected void failed(Throwable e, org.junit.runner.Description description) {
+			Path logFile = Platform.getLogFileLocation().toFile().toPath();
+			try {
+				Files.copy(logFile, logFile.resolveSibling(description.getClassName() + "."+description.getMethodName()+".log"));
+			} catch (IOException ex) {
+				log.error("Cannot backup workspace log file", ex);
+			}
+		}
+	};
+	
 	/**
 	 * Prepares test environment
 	 */
