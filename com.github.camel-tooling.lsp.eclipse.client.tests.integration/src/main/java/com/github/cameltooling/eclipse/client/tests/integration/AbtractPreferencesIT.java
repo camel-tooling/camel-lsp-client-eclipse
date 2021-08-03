@@ -18,6 +18,7 @@ package com.github.cameltooling.eclipse.client.tests.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.eclipse.core.runtime.CoreException;
@@ -93,11 +94,12 @@ public abstract class AbtractPreferencesIT {
 				return Stream.of(proposals).map(ICompletionProposal::getDisplayString)
 						.filter(displayString -> displayString.contains("jgroups-raft:clusterName")).count();
 			}
-		}.waitForCondition(Display.getDefault(), 10000);
+		}.waitForCondition(Display.getDefault(), 30000);
 		
 		long count = Stream.of(proposals).map(ICompletionProposal::getDisplayString)
 						.filter(displayString -> displayString.contains("jgroups-raft:clusterName")).count();
-		assertThat(count).isEqualTo(numberOfJgroupsRaftCompletion);
+		String jgroupsProposals = Stream.of(proposals).map(ICompletionProposal::getDisplayString).collect(Collectors.joining(";"));
+		assertThat(count).describedAs("Wrong number "+ count +" of expected proposals "+ numberOfJgroupsRaftCompletion+" for jgroup: " + jgroupsProposals).isEqualTo(numberOfJgroupsRaftCompletion);
 	}
 
 }
