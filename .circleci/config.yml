@@ -10,7 +10,7 @@ jobs:
           command: mvn clean verify
       - when:
           condition:
-            equal: [master, << pipeline.git.branch >>]
+            equal: [main, << pipeline.git.branch >>]
           steps:
             - run:
                 name: Sonar Analysis
