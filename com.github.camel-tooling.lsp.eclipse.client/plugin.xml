@@ -91,16 +91,6 @@
   </proposalComputer> 
    </extension>
    <extension
-         id="id1"
-         point="org.eclipse.jdt.ui.javaCompletionProposalComputer">
-      <javaCompletionProposalComputer
-            activate="true"
-            categoryId="org.eclipse.jdt.ui.defaultProposalCategory"
-            class="com.github.cameltooling.eclipse.java.completion.CamelCompletionProposalComputer"
-            needsSortingAfterFiltering="false">
-      </javaCompletionProposalComputer>
-   </extension>
-   <extension
          point="org.eclipse.core.contenttype.contentTypes">
       <content-type
             base-type="org.eclipse.core.runtime.text"
