@@ -18,7 +18,6 @@ package com.github.cameltooling.lsp.ui.tests;
 
 import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.eclipse.reddeer.swt.impl.ctab.DefaultCTabItem;
 import org.eclipse.reddeer.workbench.impl.editor.DefaultEditor;
 import org.eclipse.reddeer.workbench.ui.dialogs.WorkbenchPreferenceDialog;
 
@@ -31,12 +30,12 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 /**
- * Tests <i>Apache Camel Tooling LSP client</i> in XML Editor (Source tab)</br>
+ * Tests <i>Apache Camel Tooling LSP client</i> in Generic Text Editor</br>
  *
  * @author djelinek
  */
 @RunWith(RedDeerSuite.class)
-public class CamelLSPCompletionTest extends DefaultLSPCompletionTest {
+public class GenericEditorLSPCompletionTest extends DefaultLSPCompletionTest {
 
 	@BeforeClass
 	public static void prepareEnvironment() {
@@ -44,14 +43,13 @@ public class CamelLSPCompletionTest extends DefaultLSPCompletionTest {
 		DefaultEditorPreferencePage defaultEditor = new DefaultEditorPreferencePage(prefs);
 		prefs.open();
 		prefs.select(defaultEditor);
-		defaultEditor.set(".xml", "XML Editor");
+		defaultEditor.set(".xml", "Generic Text Editor");
 		prefs.ok();
 		
 		JavaProjectFactory.create(PROJECT_NAME);
 		new ProjectExplorer().selectProjects(PROJECT_NAME);
 		CreateNewEmptyFile.XMLFile(CAMEL_CONTEXT);
 		new DefaultEditor(CAMEL_CONTEXT).activate();
-		new DefaultCTabItem(EDITOR_SOURCE_TAB).activate();
 		EditorManipulator.copyFileContentToXMLEditor(RESOURCES_CONTEXT_PATH);
 	}
 	
