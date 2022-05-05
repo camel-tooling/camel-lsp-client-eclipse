@@ -26,7 +26,7 @@
 		<staging.repos>false</staging.repos>
 		<rd.skipUnfixedIssues>true</rd.skipUnfixedIssues>
 		<skipUITests>false</skipUITests>
-		<testUIClass>CamelLSPCompletionTest</testUIClass>
+		<testUIClass>SmokeTests</testUIClass>
 		<sonar.jacoco.reportPath>../../../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.jacoco.itReportPath>../../../target/jacoco-it.exec</sonar.jacoco.itReportPath>
 		<ui.tests.vmargs>-XX:+HeapDumpOnOutOfMemoryError</ui.tests.vmargs>
