@@ -22,6 +22,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 import com.github.cameltooling.lsp.ui.tests.CamelLSPCompletionTest;
 import com.github.cameltooling.lsp.ui.tests.GenericEditorLSPCompletionTest;
+import com.github.cameltooling.lsp.ui.tests.PluginInstalledTest;
 
 import junit.framework.TestSuite;
 
@@ -32,7 +33,8 @@ import junit.framework.TestSuite;
  */
 @SuiteClasses({
 	CamelLSPCompletionTest.class,
-	GenericEditorLSPCompletionTest.class
+	GenericEditorLSPCompletionTest.class,
+	PluginInstalledTest.class
 	})
 
 @RunWith(RedDeerSuite.class)
