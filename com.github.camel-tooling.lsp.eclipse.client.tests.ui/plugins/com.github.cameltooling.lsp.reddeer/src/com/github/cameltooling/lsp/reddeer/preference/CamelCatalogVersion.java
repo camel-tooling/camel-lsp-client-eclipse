@@ -14,32 +14,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.lsp.ui.tests.suite;
+package com.github.cameltooling.lsp.reddeer.preference;
 
-import org.eclipse.reddeer.junit.runner.RedDeerSuite;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite.SuiteClasses;
-
-import com.github.cameltooling.lsp.ui.tests.CamelCatalogVersionFeatureTest;
-import com.github.cameltooling.lsp.ui.tests.CamelLSPCompletionTest;
-import com.github.cameltooling.lsp.ui.tests.GenericEditorLSPCompletionTest;
-import com.github.cameltooling.lsp.ui.tests.PluginInstalledTest;
-
-import junit.framework.TestSuite;
+import org.eclipse.reddeer.core.reference.ReferencedComposite;
+import org.eclipse.reddeer.jface.preference.PreferencePage;
+import org.eclipse.reddeer.swt.impl.text.LabeledText;
 
 /**
- * Runs smoke tests on Camel LSP Client
- * 
- * @author djelinek
+ * Represents <i>Preferences... -> Apache Camel</i> page.
+ *
+ * @author fpospisi
  */
-@SuiteClasses({
-	CamelCatalogVersionFeatureTest.class,
-	CamelLSPCompletionTest.class,
-	GenericEditorLSPCompletionTest.class,
-	PluginInstalledTest.class
-	})
+public class CamelCatalogVersion extends PreferencePage {
 
-@RunWith(RedDeerSuite.class)
-public class SmokeTests extends TestSuite {
+	public CamelCatalogVersion(ReferencedComposite ref) {
+		super(ref, "Apache Camel");
+	}
 
+	/**
+	 * Sets Catalog version.
+	 * 
+	 * @param required Catalog version.
+	 */
+	public void setVersion(String version) {
+		new LabeledText("Catalog version").setText(version);
+	}
+
+	/**
+	 * Gets set Catalog version.
+	 * 
+	 * @return currently used Catalog version.
+	 */
+	public String getVersion() {
+		return new LabeledText("Catalog version").getText();
+	}
 }
