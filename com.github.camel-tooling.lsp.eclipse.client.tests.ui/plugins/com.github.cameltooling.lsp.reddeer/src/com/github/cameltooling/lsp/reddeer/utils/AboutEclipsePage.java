@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.eclipse.reddeer.common.wait.TimePeriod;
 import org.eclipse.reddeer.common.wait.WaitUntil;
+import org.eclipse.reddeer.common.wait.WaitWhile;
 import org.eclipse.reddeer.swt.api.Shell;
 import org.eclipse.reddeer.swt.api.TableItem;
 import org.eclipse.reddeer.swt.condition.ShellIsAvailable;
@@ -31,6 +32,7 @@ import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
 import org.eclipse.reddeer.swt.impl.table.DefaultTable;
 import org.eclipse.reddeer.swt.impl.table.DefaultTableItem;
 import org.eclipse.reddeer.swt.impl.text.DefaultText;
+import org.eclipse.reddeer.workbench.core.condition.JobIsRunning;
 import org.eclipse.reddeer.workbench.impl.shell.WorkbenchShell;
 
 /**
@@ -89,7 +91,7 @@ public class AboutEclipsePage {
 		openInstallationDetails();
 		new WaitUntil(new ShellIsAvailable(ECLIPSE_INSTALLATION_DETAILS), TimePeriod.DEFAULT);
 		new DefaultCTabItem("Plug-ins").activate();
-
+		new WaitWhile(new JobIsRunning(), TimePeriod.LONG);
 	}
 
 	/**
