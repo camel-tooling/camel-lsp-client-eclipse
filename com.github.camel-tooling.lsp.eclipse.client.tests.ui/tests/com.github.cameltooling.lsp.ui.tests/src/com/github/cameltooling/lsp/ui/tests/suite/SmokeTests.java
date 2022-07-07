@@ -20,6 +20,7 @@ import org.eclipse.reddeer.junit.runner.RedDeerSuite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite.SuiteClasses;
 
+import com.github.cameltooling.lsp.ui.tests.AdditionalComponentFeatureTest;
 import com.github.cameltooling.lsp.ui.tests.CamelCatalogVersionFeatureTest;
 import com.github.cameltooling.lsp.ui.tests.CamelLSPCompletionTest;
 import com.github.cameltooling.lsp.ui.tests.GenericEditorLSPCompletionTest;
@@ -33,6 +34,7 @@ import junit.framework.TestSuite;
  * @author djelinek
  */
 @SuiteClasses({
+	AdditionalComponentFeatureTest.class,
 	CamelCatalogVersionFeatureTest.class,
 	CamelLSPCompletionTest.class,
 	GenericEditorLSPCompletionTest.class,
