@@ -24,9 +24,11 @@ import org.eclipse.reddeer.common.properties.RedDeerProperties;
 import org.eclipse.reddeer.common.wait.TimePeriod;
 import org.eclipse.reddeer.eclipse.core.resources.ProjectItem;
 import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
+import org.eclipse.reddeer.eclipse.ui.views.log.LogView;
 import org.eclipse.reddeer.jface.text.contentassist.ContentAssistant;
 import org.eclipse.reddeer.junit.runner.RedDeerSuite;
 import org.eclipse.reddeer.requirements.cleanerrorlog.CleanErrorLogRequirement;
+import org.eclipse.reddeer.requirements.cleanworkspace.CleanWorkspaceRequirement;
 import org.eclipse.reddeer.swt.api.Shell;
 import org.eclipse.reddeer.swt.impl.button.PushButton;
 import org.eclipse.reddeer.swt.impl.ctab.DefaultCTabItem;
@@ -118,6 +120,17 @@ public class CamelCatalogVersionFeatureTest {
 
 		setCamelCatalogVersion(DEFAULT_VERSION); // set version back to default
 	}
+	
+	@After
+	public void deleteProject() {
+		JavaProjectFactory.deleteAllProjects();
+		LogView log = new LogView();
+		log.open();
+		log.deleteLog();
+		WorkbenchShellHandler.getInstance().closeAllNonWorbenchShells();
+
+		new CleanWorkspaceRequirement().fulfill();
+	}
 
 	@Rule
 	public ErrorCollector collector = new ErrorCollector();
@@ -162,7 +175,7 @@ public class CamelCatalogVersionFeatureTest {
 		cursorPosition = sourceEditor.getText().indexOf("uri");
 		sourceEditor.setCursorPosition(cursorPosition + 5); // to write between ""
 		sourceEditor.insertText(component);
-		sourceEditor.setCursorPosition(cursorPosition + COMPONENT.length());
+		sourceEditor.setCursorPosition(cursorPosition + component.length());
 	}
 
 	/**
