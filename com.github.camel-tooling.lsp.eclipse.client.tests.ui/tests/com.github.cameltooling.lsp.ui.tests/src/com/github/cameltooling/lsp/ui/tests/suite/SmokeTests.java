@@ -24,6 +24,7 @@ import com.github.cameltooling.lsp.ui.tests.AdditionalComponentFeatureTest;
 import com.github.cameltooling.lsp.ui.tests.CamelCatalogVersionFeatureTest;
 import com.github.cameltooling.lsp.ui.tests.CamelLSPCompletionTest;
 import com.github.cameltooling.lsp.ui.tests.GenericEditorLSPCompletionTest;
+import com.github.cameltooling.lsp.ui.tests.JavaEditorCompletionTest;
 import com.github.cameltooling.lsp.ui.tests.PluginInstalledTest;
 
 import junit.framework.TestSuite;
@@ -38,6 +39,7 @@ import junit.framework.TestSuite;
 	CamelCatalogVersionFeatureTest.class,
 	CamelLSPCompletionTest.class,
 	GenericEditorLSPCompletionTest.class,
+	JavaEditorCompletionTest.class,
 	PluginInstalledTest.class
 	})
 

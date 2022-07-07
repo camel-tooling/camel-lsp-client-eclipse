@@ -16,6 +16,8 @@
  */
 package com.github.cameltooling.lsp.reddeer.utils;
 
+import com.github.cameltooling.lsp.reddeer.wizard.NewJavaClassFirstPage;
+import com.github.cameltooling.lsp.reddeer.wizard.NewJavaClassWizard;
 import com.github.cameltooling.lsp.reddeer.wizard.NewXMLFileFirstPage;
 import com.github.cameltooling.lsp.reddeer.wizard.NewXMLFileWizard;
 
@@ -37,5 +39,18 @@ public class CreateNewEmptyFile {
 		NewXMLFileFirstPage newWizXMLPage = new NewXMLFileFirstPage(newWizXML);
 		newWizXMLPage.setFileName(filename);
 		newWizXML.finish();
+	}
+	
+	/**
+	 * Creates new empty Java class.
+	 *
+	 * @param filename Name of class.
+	 */
+	public static void JavaClass(String filename) {
+		NewJavaClassWizard newWizJavaClass = new NewJavaClassWizard();
+		newWizJavaClass.open();
+		NewJavaClassFirstPage newWizJavaClassPage = new NewJavaClassFirstPage(newWizJavaClass);
+		newWizJavaClassPage.setClassName(filename);
+		newWizJavaClass.finish();
 	}
 }
