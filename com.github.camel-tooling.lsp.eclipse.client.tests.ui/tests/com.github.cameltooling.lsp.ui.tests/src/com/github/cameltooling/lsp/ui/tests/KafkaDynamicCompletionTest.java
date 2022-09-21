@@ -25,7 +25,6 @@ import com.github.cameltooling.lsp.reddeer.utils.JavaProjectFactory;
 import com.github.cameltooling.lsp.ui.tests.utils.EditorManipulator;
 
 import org.eclipse.reddeer.common.properties.RedDeerProperties;
-import org.eclipse.reddeer.common.wait.AbstractWait;
 import org.eclipse.reddeer.common.wait.TimePeriod;
 import org.eclipse.reddeer.eclipse.core.resources.ProjectItem;
 import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
@@ -34,10 +33,8 @@ import org.eclipse.reddeer.jface.text.contentassist.ContentAssistant;
 import org.eclipse.reddeer.junit.runner.RedDeerSuite;
 import org.eclipse.reddeer.requirements.cleanerrorlog.CleanErrorLogRequirement;
 import org.eclipse.reddeer.requirements.cleanworkspace.CleanWorkspaceRequirement;
-import org.eclipse.reddeer.swt.api.Shell;
 import org.eclipse.reddeer.swt.impl.button.PushButton;
 import org.eclipse.reddeer.swt.impl.ctab.DefaultCTabItem;
-import org.eclipse.reddeer.swt.impl.shell.DefaultShell;
 import org.eclipse.reddeer.workbench.handler.WorkbenchShellHandler;
 import org.eclipse.reddeer.workbench.impl.editor.DefaultEditor;
 import org.eclipse.reddeer.workbench.ui.dialogs.WorkbenchPreferenceDialog;
@@ -60,8 +57,8 @@ public class KafkaDynamicCompletionTest {
 	public static final String RESOURCES_CONTEXT_PATH = "resources/kafka-dynamic-completion-context.xml";
 
 	/*
-	 *  Must be different from localhost:9092 which is default value and LSP client
-	 *  tries to connect by default.
+	 * Must be different from localhost:9092 which is default value and LSP client
+	 * tries to connect by default.
 	 */
 	public static final String KAFKA_CONNECTION_URL = "localhost:9093";
 
@@ -123,7 +120,6 @@ public class KafkaDynamicCompletionTest {
 			System.clearProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
 		}
 		TimePeriod.updateFactor();
-
 	}
 
 	@After
@@ -157,7 +153,19 @@ public class KafkaDynamicCompletionTest {
 		reopenEditor(CAMEL_CONTEXT);
 
 		insertComponent(COMPONENT);
+
+		sourceEditor.save();
+
 		assistant = sourceEditor.openContentAssistant();
+
+		for (int i = 1; i <= 10; i++) {
+			if (assistant.getProposals().contains(EXPECTED_TOPIC)) {
+				break;
+			}
+			assistant.close();
+			assistant = sourceEditor.openContentAssistant();
+		}
+
 		collector.checkThat(assistant.getProposals().contains(EXPECTED_TOPIC), equalTo(true));
 		collector.checkThat(assistant.getProposals().contains(UNEXPECTED_TOPIC), equalTo(false));
 	}
@@ -172,7 +180,8 @@ public class KafkaDynamicCompletionTest {
 		cursorPosition = sourceEditor.getText().indexOf("uri");
 		sourceEditor.setCursorPosition(cursorPosition + 5); // to write between ""
 		sourceEditor.insertText(component);
-		sourceEditor.setCursorPosition(cursorPosition + 5 + component.length());
+		cursorPosition = cursorPosition + 5 + component.length();
+		sourceEditor.setCursorPosition(cursorPosition);
 	}
 
 	/**
