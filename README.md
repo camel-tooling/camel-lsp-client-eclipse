@@ -16,8 +16,12 @@ After you add this extension to your Eclipse IDE installation, when you use the 
    * Quick reference documentation when you hover the cursor over a Camel component
 
    * Provide a specific Camel catalog version through preferences
+  
+   * Provide a specific runtime provider of Camel catalog through preferences
    
    * Specify Kafka connection URl through preferences for dynamic completion on Camel kafka component
+
+  * Specify a list of additional Camel components
    
 When you use the XML or Java editor, only the auto-completion feature is provided.
 
