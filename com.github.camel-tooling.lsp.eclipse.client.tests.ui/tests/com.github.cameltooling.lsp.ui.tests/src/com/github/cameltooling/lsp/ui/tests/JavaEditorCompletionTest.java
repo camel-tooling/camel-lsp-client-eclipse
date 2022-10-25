@@ -206,7 +206,7 @@ public class JavaEditorCompletionTest {
 
 	private void assertComponentSchemes(List<String> proposals) {
 		collector.checkThat("Content assistant is empty", proposals.isEmpty(), equalTo(false));
-		collector.checkThat("Content assistant is not filtered", proposals.get(0).startsWith("f"), equalTo(true));
+		collector.checkThat("Content assistant is not filtered. It contains: "+ proposals.toString(), proposals.get(0).startsWith("f"), equalTo(true));
 	}
 
 	private void tryEndpointOptionsCompletion() {
