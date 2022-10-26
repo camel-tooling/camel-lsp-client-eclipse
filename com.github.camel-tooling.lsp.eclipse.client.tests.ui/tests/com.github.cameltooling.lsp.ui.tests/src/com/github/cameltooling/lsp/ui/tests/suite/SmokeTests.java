@@ -23,6 +23,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import com.github.cameltooling.lsp.ui.tests.AdditionalComponentFeatureTest;
 import com.github.cameltooling.lsp.ui.tests.CamelCatalogVersionFeatureTest;
 import com.github.cameltooling.lsp.ui.tests.CamelLSPCompletionTest;
+import com.github.cameltooling.lsp.ui.tests.CamelRuntimeProviderFeatureTest;
 import com.github.cameltooling.lsp.ui.tests.GenericEditorLSPCompletionTest;
 import com.github.cameltooling.lsp.ui.tests.JavaEditorCompletionTest;
 import com.github.cameltooling.lsp.ui.tests.PluginInstalledTest;
@@ -38,6 +39,7 @@ import junit.framework.TestSuite;
 	AdditionalComponentFeatureTest.class,
 	CamelCatalogVersionFeatureTest.class,
 	CamelLSPCompletionTest.class,
+	CamelRuntimeProviderFeatureTest.class,
 	GenericEditorLSPCompletionTest.class,
 	JavaEditorCompletionTest.class,
 	PluginInstalledTest.class
