@@ -19,10 +19,8 @@ package com.github.cameltooling.lsp.ui.tests;
 import com.github.cameltooling.lsp.reddeer.utils.CreateNewEmptyFile;
 import com.github.cameltooling.lsp.reddeer.utils.JavaProjectFactory;
 import com.github.cameltooling.lsp.ui.tests.utils.EditorManipulator;
+import com.github.cameltooling.lsp.ui.tests.utils.TimeoutPeriodManipulator;
 
-import org.eclipse.reddeer.common.properties.RedDeerProperties;
-import org.eclipse.reddeer.common.wait.TimePeriod;
-import org.eclipse.reddeer.eclipse.core.resources.ProjectItem;
 import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.reddeer.eclipse.ui.views.log.LogView;
 import org.eclipse.reddeer.jface.text.contentassist.ContentAssistant;
@@ -46,6 +44,7 @@ import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
+import com.github.cameltooling.lsp.reddeer.editor.EditorComponentControl;
 import com.github.cameltooling.lsp.reddeer.editor.SourceEditor;
 import com.github.cameltooling.lsp.reddeer.preference.CamelCatalogVersion;
 
@@ -54,7 +53,7 @@ import com.github.cameltooling.lsp.reddeer.preference.CamelCatalogVersion;
 * @author fpospisi
 */
 @RunWith(RedDeerSuite.class)
-public class CamelCatalogVersionFeatureTest {
+public class CamelCatalogVersionFeatureTest extends DefaultTest {
 
 	public static final String PROJECT_NAME = "catalog-feature-test";
 	public static final String CAMEL_CONTEXT = "camel-context.xml";
@@ -65,12 +64,7 @@ public class CamelCatalogVersionFeatureTest {
 	public static final String OLDER_VERSION = "2.15.1";
 
 	public static final String SOURCE_TAB = "Source";
-
-	private SourceEditor sourceEditor;
-	private int cursorPosition;
-
-	private String timePeriodfactor;
-	private static final String TIMEOUT_PERIOD_FACTOR_PROPETY_NAME = RedDeerProperties.TIME_PERIOD_FACTOR.getName();
+	public static final String COMPONENT_PLACE = "uri";
 
 	/**
 	 * Creates empty project, then creates XML file with camel-context.
@@ -96,9 +90,7 @@ public class CamelCatalogVersionFeatureTest {
 
 	@Before
 	public void setupTimeout() {
-		timePeriodfactor = System.getProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
-		System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, "3");
-		TimePeriod.updateFactor();
+		TimeoutPeriodManipulator.setFactor(3);
 	}
 
 	/**
@@ -111,16 +103,10 @@ public class CamelCatalogVersionFeatureTest {
 
 	@After
 	public void tearDown() {
-		if (timePeriodfactor != null) {
-			System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, timePeriodfactor);
-		} else {
-			System.clearProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
-		}
-		TimePeriod.updateFactor();
-
+		TimeoutPeriodManipulator.clearFactor();
 		setCamelCatalogVersion(DEFAULT_VERSION); // set version back to default
 	}
-	
+
 	@After
 	public void deleteProject() {
 		JavaProjectFactory.deleteAllProjects();
@@ -142,40 +128,29 @@ public class CamelCatalogVersionFeatureTest {
 	 */
 	@Test
 	public void testCamelCatalogVersionFeature() {
-		insertComponent(COMPONENT);
+		EditorComponentControl.insertComponent(COMPONENT, COMPONENT_PLACE);
 
+		// set cursor position for getting proposal
+		SourceEditor sourceEditor = new SourceEditor();
+		int cursorPosition = sourceEditor.getText().indexOf(COMPONENT) + COMPONENT.length();
+		sourceEditor.setCursorPosition(cursorPosition);
+
+		// check proposal
 		ContentAssistant assistant = sourceEditor.openContentAssistant();
+		assistant.getProposals();
 		collector.checkThat(assistant.getProposals().contains(COMPONENT_PROPOSAL), equalTo(true));
 
 		setCamelCatalogVersion(OLDER_VERSION);
-		reopenEditor(CAMEL_CONTEXT);
 
-		insertComponent(COMPONENT);
-		assistant = sourceEditor.openContentAssistant();
-		collector.checkThat(assistant.getProposals().contains(COMPONENT_PROPOSAL), equalTo(false));
-	}
+		SourceEditor.reopenEditor(PROJECT_NAME, CAMEL_CONTEXT);
 
-	/**
-	 * Open file in editor.
-	 *
-	 * @param path to file.
-	 */
-	public void openFile(String... path) {
-		ProjectItem item = new ProjectExplorer().getProject(PROJECT_NAME).getProjectItem(path);
-		item.open();
-	}
-
-	/**
-	 * Inserts component to camel-context to uri="$HERE".
-	 *
-	 * @param component to be added represented by string.
-	 */
-	public void insertComponent(String component) {
+		EditorComponentControl.insertComponent(COMPONENT, COMPONENT_PLACE);
 		sourceEditor = new SourceEditor();
-		cursorPosition = sourceEditor.getText().indexOf("uri");
-		sourceEditor.setCursorPosition(cursorPosition + 5); // to write between ""
-		sourceEditor.insertText(component);
-		sourceEditor.setCursorPosition(cursorPosition + component.length());
+		cursorPosition = sourceEditor.getText().indexOf(COMPONENT) + COMPONENT.length();
+		sourceEditor.setCursorPosition(cursorPosition);
+		assistant = sourceEditor.openContentAssistant();
+
+		collector.checkThat(assistant.getProposals().contains(COMPONENT_PROPOSAL), equalTo(false));
 	}
 
 	/**
@@ -193,16 +168,5 @@ public class CamelCatalogVersionFeatureTest {
 		new PushButton("Apply").click();
 		Shell shell = new DefaultShell("Preferences");
 		new PushButton(shell, "Apply and Close").click();
-	}
-
-	/**
-	 * Reopen editor to take effect of changes.
-	 *
-	 * @param file Name of file to be open after reopen.
-	 */
-	public void reopenEditor(String file) {
-		sourceEditor.close();
-		openFile(file);
-		sourceEditor = new SourceEditor();
 	}
 }

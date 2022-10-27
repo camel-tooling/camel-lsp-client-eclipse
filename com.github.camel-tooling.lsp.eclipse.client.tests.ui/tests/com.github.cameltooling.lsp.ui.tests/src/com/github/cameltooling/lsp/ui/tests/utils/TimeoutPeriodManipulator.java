@@ -14,37 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.cameltooling.lsp.reddeer.utils;
+package com.github.cameltooling.lsp.ui.tests.utils;
 
-import static org.junit.Assert.assertTrue;
-
-import com.github.cameltooling.lsp.reddeer.LogGrapper;
+import org.eclipse.reddeer.common.properties.RedDeerProperties;
+import org.eclipse.reddeer.common.wait.TimePeriod;
 
 /**
- * Checks 'lsp' errors in Error Log View
- * 
- * @author djelinek
+ * @author fpospisi
  */
-public class LogChecker {
-	
-	private LogChecker() {
-		//private constructor, only static access
+public class TimeoutPeriodManipulator {
+
+	private static final String TIMEOUT_PERIOD_FACTOR_PROPERTY_NAME = RedDeerProperties.TIME_PERIOD_FACTOR.getName();
+
+	/**
+	 * Changes Timeout Period to required value.
+	 * 
+	 * @param value
+	 */
+	public static void setFactor(int value) {
+		System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPERTY_NAME, String.valueOf(value));
+		TimePeriod.updateFactor();
 	}
-	
-	public static boolean noLSPError() {
-		return LogGrapper.getPluginErrors("lsp").isEmpty();
+
+	/**
+	 * Changes Timeout Period back to default.
+	 */
+	public static void clearFactor() {
+		System.clearProperty(TIMEOUT_PERIOD_FACTOR_PROPERTY_NAME);
+		TimePeriod.updateFactor();
 	}
-	
-	public static void assertNoLSPError() {
-		assertTrue("Console contains 'Apache Camel LSP' errors", noLSPError());
-	}
-	
-	public static boolean noCamelClientLSPError() {
-		return LogGrapper.getPluginErrors("camel-tooling").isEmpty();
-	}
-	
-	public static void assertNoCamelClientError() {
-		assertTrue("Console contains 'Apache Camel Client LSP' errors", noCamelClientLSPError());
-	}
-	
 }
