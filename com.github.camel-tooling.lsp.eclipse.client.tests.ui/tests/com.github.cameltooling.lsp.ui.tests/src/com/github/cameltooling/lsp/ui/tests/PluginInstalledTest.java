@@ -46,21 +46,20 @@ public class PluginInstalledTest {
 	@Test
 	public void testPluginInstalled() {
 
-		//Open plug-ins page and get plugin. 
+		// Open plug-ins page and get plugin.
 		AboutEclipsePage.openPlugins();
 		TableItem plugin = AboutEclipsePage.getPluginByID(id);
-		
-		//Checks id, if null = no plug-in with this id found.
-		assertTrue(plugin != null);
-		//Check provider.
-		assertEquals(AboutEclipsePage.getPluginProvider(plugin), provider);
-		//Check name. 
-		assertEquals(AboutEclipsePage.getPluginName(plugin), name);
-		//Check version. 
-		assertThat(AboutEclipsePage.getPluginVersion(plugin), containsString(version));
-		
-		//Close plug-ins page.
-		AboutEclipsePage.closePlugins();
 
+		// Checks id, if null = no plug-in with this id found.
+		assertTrue(plugin != null);
+		// Check provider.
+		assertEquals(AboutEclipsePage.getPluginProvider(plugin), provider);
+		// Check name.
+		assertEquals(AboutEclipsePage.getPluginName(plugin), name);
+		// Check version.
+		assertThat(AboutEclipsePage.getPluginVersion(plugin), containsString(version));
+
+		// Close plug-ins page.
+		AboutEclipsePage.closePlugins();
 	}
 }

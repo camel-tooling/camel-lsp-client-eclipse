@@ -21,6 +21,8 @@ import java.util.List;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.reddeer.common.util.Display;
 import org.eclipse.reddeer.common.util.ResultRunnable;
+import org.eclipse.reddeer.eclipse.core.resources.ProjectItem;
+import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.reddeer.jface.text.contentassist.ContentAssistant;
 import org.eclipse.reddeer.swt.impl.styledtext.DefaultStyledText;
 import org.eclipse.reddeer.workbench.handler.EditorHandler;
@@ -109,5 +111,26 @@ public class SourceEditor extends DefaultEditor {
             }
         });
     }
+    
+	/**
+	 * Opens required file in editor.
+	 * 
+	 * @param project Name of project containing file.
+	 * @param path    Path to file.
+	 */
+	public static void openFile(String project, String... path) {
+		ProjectItem item = new ProjectExplorer().getProject(project).getProjectItem(path);
+		item.open();
+	}
 	
+	/**
+	 * Closes current instance of editor and opens again required file.
+	 * 
+	 * @param project Name of project containing file.
+	 * @param file    Name of file to be open after reopen.
+	 */
+	public static void reopenEditor(String project, String... file) {
+		new SourceEditor().close();
+		openFile(project, file);
+	}
 }

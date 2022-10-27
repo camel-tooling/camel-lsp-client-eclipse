@@ -21,7 +21,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import java.util.List;
 
 import org.eclipse.reddeer.common.logging.Logger;
-import org.eclipse.reddeer.common.properties.RedDeerProperties;
 import org.eclipse.reddeer.common.wait.TimePeriod;
 import org.eclipse.reddeer.common.wait.WaitWhile;
 import org.eclipse.reddeer.eclipse.ui.views.log.LogView;
@@ -38,6 +37,7 @@ import com.github.cameltooling.lsp.reddeer.editor.SourceEditor;
 import com.github.cameltooling.lsp.reddeer.preference.ConsolePreferenceUtil;
 import com.github.cameltooling.lsp.reddeer.utils.LogChecker;
 import com.github.cameltooling.lsp.ui.tests.utils.EditorManipulator;
+import com.github.cameltooling.lsp.ui.tests.utils.TimeoutPeriodManipulator;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -65,18 +65,15 @@ public abstract class DefaultLSPCompletionTest {
 
 	private static Logger log = Logger.getLogger(DefaultLSPCompletionTest.class);
 
-	private static final String TIMEOUT_PERIOD_FACTOR_PROPETY_NAME = RedDeerProperties.TIME_PERIOD_FACTOR.getName();
-	
 	public static final String RESOURCES_CONTEXT_PATH = "resources/camel-context-cbr.xml";
 	public static final String PROJECT_NAME = "lsp";
 	public static final String CAMEL_CONTEXT = "camel-context.xml";
 	public static final String INSERT_SPACE = " ";
 	public static final String EDITOR_SOURCE_TAB = "Source";
-	
+
 	private SourceEditor editor;
 	private ContentAssistant assistant;
 	private int cursorPosition;
-	private String timePeriodfactor;
 
 	/**
 	 * Prepares test environment
@@ -104,12 +101,10 @@ public abstract class DefaultLSPCompletionTest {
 		log.info("Deleting Error Log.");
 		new CleanErrorLogRequirement().fulfill();
 	}
-	
+
 	@Before
 	public void setupTimeout() {
-		timePeriodfactor = System.getProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
-		System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, "3");
-		TimePeriod.updateFactor();
+		TimeoutPeriodManipulator.setFactor(1);
 	}
 
 	/**
@@ -120,17 +115,12 @@ public abstract class DefaultLSPCompletionTest {
 		log.info("Closing all non-workbench shells.");
 		WorkbenchShellHandler.getInstance().closeAllNonWorbenchShells();
 	}
-	
+
 	@After
 	public void tearDown() {
 		editor.activate();
 		EditorManipulator.copyFileContentToXMLEditor(RESOURCES_CONTEXT_PATH);
-		if (timePeriodfactor != null) {
-			System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, timePeriodfactor);
-		} else {
-			System.clearProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
-		}
-		TimePeriod.updateFactor();
+		TimeoutPeriodManipulator.clearFactor();
 	}
 
 	/**
@@ -141,7 +131,7 @@ public abstract class DefaultLSPCompletionTest {
 		log.info("Deleting all projects");
 		new CleanWorkspaceRequirement().fulfill();
 	}
-	
+
 	@Rule
 	public ErrorCollector collector = new ErrorCollector();
 
@@ -151,6 +141,7 @@ public abstract class DefaultLSPCompletionTest {
 	 */
 	@Test
 	public void testComponentSchemes() {
+		//AbstractWait.sleep(TimePeriod.getCustom(1100));
 		editor = new SourceEditor();
 
 		cursorPosition = editor.getText().indexOf("<from");
@@ -161,7 +152,7 @@ public abstract class DefaultLSPCompletionTest {
 		editor.setCursorPosition(cursorPosition + 20);
 		assertComponentSchemes(editor.getCompletionProposals());
 
-		LogChecker.assertNoLSPError();
+		LogChecker.assertNoCamelClientError();
 	}
 
 	/**
@@ -180,7 +171,7 @@ public abstract class DefaultLSPCompletionTest {
 		editor.setCursorPosition(cursorPosition += 42);
 		tryEndpointOptionsCompletion();
 
-		LogChecker.assertNoLSPError();
+		LogChecker.assertNoCamelClientError();
 	}
 
 	/**
@@ -199,7 +190,7 @@ public abstract class DefaultLSPCompletionTest {
 		editor.setCursorPosition(cursorPosition += 42);
 		tryAdditionalOptionsCompletion();
 
-		LogChecker.assertNoLSPError();
+		LogChecker.assertNoCamelClientError();
 	}
 
 	/**
@@ -217,7 +208,7 @@ public abstract class DefaultLSPCompletionTest {
 		editor.setCursorPosition(cursorPosition += 42);
 		tryOptionsFiltering();
 
-		LogChecker.assertNoLSPError();
+		LogChecker.assertNoCamelClientError();
 	}
 
 	private void assertComponentSchemes(List<String> proposals) {

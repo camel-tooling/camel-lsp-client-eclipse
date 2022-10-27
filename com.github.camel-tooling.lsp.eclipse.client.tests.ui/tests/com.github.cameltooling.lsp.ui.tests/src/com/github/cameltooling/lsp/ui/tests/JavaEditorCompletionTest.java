@@ -16,7 +16,6 @@
  */
 package com.github.cameltooling.lsp.ui.tests;
 
-import org.eclipse.reddeer.common.properties.RedDeerProperties;
 import org.eclipse.reddeer.common.wait.TimePeriod;
 import org.eclipse.reddeer.common.wait.WaitWhile;
 import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
@@ -45,6 +44,7 @@ import com.github.cameltooling.lsp.reddeer.preference.ConsolePreferenceUtil;
 import com.github.cameltooling.lsp.reddeer.utils.CreateNewEmptyFile;
 import com.github.cameltooling.lsp.reddeer.utils.JavaProjectFactory;
 import com.github.cameltooling.lsp.ui.tests.utils.EditorManipulator;
+import com.github.cameltooling.lsp.ui.tests.utils.TimeoutPeriodManipulator;
 
 /*
 *
@@ -52,9 +52,6 @@ import com.github.cameltooling.lsp.ui.tests.utils.EditorManipulator;
 */
 @RunWith(RedDeerSuite.class)
 public class JavaEditorCompletionTest {
-
-	private static final String TIMEOUT_PERIOD_FACTOR_PROPETY_NAME = RedDeerProperties.TIME_PERIOD_FACTOR.getName();
-	private String timePeriodfactor;
 
 	public static final String PROJECT_NAME = "java-dsl-completion-test";
 	public static final String CAMEL_ROUTE_NAME = "CamelRoute";
@@ -97,9 +94,7 @@ public class JavaEditorCompletionTest {
 
 	@Before
 	public void setupTimeout() {
-		timePeriodfactor = System.getProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
-		System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, "5");
-		TimePeriod.updateFactor();
+		TimeoutPeriodManipulator.setFactor(3);
 	}
 
 	/*
@@ -115,12 +110,7 @@ public class JavaEditorCompletionTest {
 	 */
 	@After
 	public void tearDown() {
-		if (timePeriodfactor != null) {
-			System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, timePeriodfactor);
-		} else {
-			System.clearProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
-		}
-		TimePeriod.updateFactor();
+		TimeoutPeriodManipulator.clearFactor();
 	}
 
 	@AfterClass
@@ -144,7 +134,7 @@ public class JavaEditorCompletionTest {
 	@Test
 	public void testComponentSchemes() {
 		editor = new SourceEditor();
-
+		
 		cursorPosition = editor.getText().indexOf("from");
 		editor.setCursorPosition(cursorPosition + 10);
 		assertComponentSchemes(editor.getCompletionProposals());
