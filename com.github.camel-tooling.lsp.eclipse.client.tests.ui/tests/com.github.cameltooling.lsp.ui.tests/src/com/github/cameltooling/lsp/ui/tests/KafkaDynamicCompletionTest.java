@@ -18,15 +18,14 @@ package com.github.cameltooling.lsp.ui.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 
+import com.github.cameltooling.lsp.reddeer.editor.EditorComponentControl;
 import com.github.cameltooling.lsp.reddeer.editor.SourceEditor;
 import com.github.cameltooling.lsp.reddeer.preference.KafkaConnectionURL;
 import com.github.cameltooling.lsp.reddeer.utils.CreateNewEmptyFile;
 import com.github.cameltooling.lsp.reddeer.utils.JavaProjectFactory;
 import com.github.cameltooling.lsp.ui.tests.utils.EditorManipulator;
+import com.github.cameltooling.lsp.ui.tests.utils.TimeoutPeriodManipulator;
 
-import org.eclipse.reddeer.common.properties.RedDeerProperties;
-import org.eclipse.reddeer.common.wait.TimePeriod;
-import org.eclipse.reddeer.eclipse.core.resources.ProjectItem;
 import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.reddeer.eclipse.ui.views.log.LogView;
 import org.eclipse.reddeer.jface.text.contentassist.ContentAssistant;
@@ -68,12 +67,10 @@ public class KafkaDynamicCompletionTest {
 	public static final String UNEXPECTED_TOPIC = "random-events";
 
 	public static final String SOURCE_TAB = "Source";
+	public static final String COMPONENT_PLACE = "uri";
 
 	private SourceEditor sourceEditor;
 	private int cursorPosition;
-
-	private String timePeriodfactor;
-	private static final String TIMEOUT_PERIOD_FACTOR_PROPETY_NAME = RedDeerProperties.TIME_PERIOD_FACTOR.getName();
 
 	/**
 	 * Creates empty project, then creates XML file with camel-context.
@@ -99,9 +96,7 @@ public class KafkaDynamicCompletionTest {
 
 	@Before
 	public void setupTimeout() {
-		timePeriodfactor = System.getProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
-		System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, "3");
-		TimePeriod.updateFactor();
+		TimeoutPeriodManipulator.setFactor(3);
 	}
 
 	/**
@@ -114,12 +109,7 @@ public class KafkaDynamicCompletionTest {
 
 	@After
 	public void tearDown() {
-		if (timePeriodfactor != null) {
-			System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, timePeriodfactor);
-		} else {
-			System.clearProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
-		}
-		TimePeriod.updateFactor();
+		TimeoutPeriodManipulator.clearFactor();
 	}
 
 	@After
@@ -143,19 +133,23 @@ public class KafkaDynamicCompletionTest {
 	 */
 	@Test
 	public void testKafkaDynamicCompletion() {
-		insertComponent(COMPONENT);
+		EditorComponentControl.insertComponent(COMPONENT, COMPONENT_PLACE);
 
+		sourceEditor = new SourceEditor();
+		cursorPosition = sourceEditor.getText().indexOf(COMPONENT) + COMPONENT.length();
+		sourceEditor.setCursorPosition(cursorPosition);
 		ContentAssistant assistant = sourceEditor.openContentAssistant();
+
 		collector.checkThat(assistant.getProposals().contains(EXPECTED_TOPIC), equalTo(false));
 		collector.checkThat(assistant.getProposals().contains(UNEXPECTED_TOPIC), equalTo(false));
 
 		setKafkaConnectionURL(KAFKA_CONNECTION_URL);
-		reopenEditor(CAMEL_CONTEXT);
 
-		insertComponent(COMPONENT);
-
-		sourceEditor.save();
-
+		SourceEditor.reopenEditor(PROJECT_NAME, CAMEL_CONTEXT);
+		EditorComponentControl.insertComponent(COMPONENT, COMPONENT_PLACE);
+		sourceEditor = new SourceEditor();
+		cursorPosition = sourceEditor.getText().indexOf(COMPONENT) + COMPONENT.length();
+		sourceEditor.setCursorPosition(cursorPosition);
 		assistant = sourceEditor.openContentAssistant();
 
 		for (int i = 1; i <= 10; i++) {
@@ -171,20 +165,6 @@ public class KafkaDynamicCompletionTest {
 	}
 
 	/**
-	 * Inserts component to camel-context to uri="$HERE".
-	 *
-	 * @param component to be added represented by string.
-	 */
-	public void insertComponent(String component) {
-		sourceEditor = new SourceEditor();
-		cursorPosition = sourceEditor.getText().indexOf("uri");
-		sourceEditor.setCursorPosition(cursorPosition + 5); // to write between ""
-		sourceEditor.insertText(component);
-		cursorPosition = cursorPosition + 5 + component.length();
-		sourceEditor.setCursorPosition(cursorPosition);
-	}
-
-	/**
 	 * Changes Kafka connection URL.
 	 *
 	 * @param URL of running Kafka connection represented by string.
@@ -196,17 +176,5 @@ public class KafkaDynamicCompletionTest {
 		prefs.select(connectionURL);
 		connectionURL.setURL(URL);
 		new PushButton(prefs, "Apply and Close").click();
-	}
-
-	/**
-	 * Reopen editor to take effect of changes.
-	 *
-	 * @param file Name of file to be open after reopen.
-	 */
-	public void reopenEditor(String file) {
-		sourceEditor.close();
-		ProjectItem item = new ProjectExplorer().getProject(PROJECT_NAME).getProjectItem(file);
-		item.open();
-		sourceEditor = new SourceEditor();
 	}
 }

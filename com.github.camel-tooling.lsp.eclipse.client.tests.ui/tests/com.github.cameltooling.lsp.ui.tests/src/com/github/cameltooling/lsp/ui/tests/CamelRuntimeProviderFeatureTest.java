@@ -16,9 +16,6 @@
  */
 package com.github.cameltooling.lsp.ui.tests;
 
-import org.eclipse.reddeer.common.properties.RedDeerProperties;
-import org.eclipse.reddeer.common.wait.TimePeriod;
-import org.eclipse.reddeer.eclipse.core.resources.ProjectItem;
 import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.reddeer.eclipse.ui.views.log.LogView;
 import org.eclipse.reddeer.jface.text.contentassist.ContentAssistant;
@@ -46,11 +43,13 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import java.util.Arrays;
 import java.util.Collection;
 
+import com.github.cameltooling.lsp.reddeer.editor.EditorComponentControl;
 import com.github.cameltooling.lsp.reddeer.editor.SourceEditor;
 import com.github.cameltooling.lsp.reddeer.preference.CamelRuntimeProvider;
 import com.github.cameltooling.lsp.reddeer.utils.CreateNewEmptyFile;
 import com.github.cameltooling.lsp.reddeer.utils.JavaProjectFactory;
 import com.github.cameltooling.lsp.ui.tests.utils.EditorManipulator;
+import com.github.cameltooling.lsp.ui.tests.utils.TimeoutPeriodManipulator;
 
 /*
 *
@@ -58,12 +57,13 @@ import com.github.cameltooling.lsp.ui.tests.utils.EditorManipulator;
 */
 @RunWith(RedDeerSuite.class)
 @UseParametersRunnerFactory(ParameterizedRequirementsRunnerFactory.class)
-public class CamelRuntimeProviderFeatureTest {
+public class CamelRuntimeProviderFeatureTest extends DefaultTest {
 
 	public static final String PROJECT_NAME = "catalog-feature-test";
 	public static final String CAMEL_CONTEXT = "camel-context.xml";
 	public static final String RESOURCES_CONTEXT_PATH = "resources/catalog-version-feature-context.xml";
 	public static final String SOURCE_TAB = "Source";
+	public static final String COMPONENT_PLACE = "uri";
 
 	public static final String DEFAULT_PROVIDER = "Default";
 	public static final String SB_PROVIDER = "Spring Boot";
@@ -79,10 +79,6 @@ public class CamelRuntimeProviderFeatureTest {
 	public static final String JMX_PROP = "jmx:serverURL";
 
 	private SourceEditor sourceEditor;
-	private int cursorPosition;
-
-	private String timePeriodfactor;
-	private static final String TIMEOUT_PERIOD_FACTOR_PROPETY_NAME = RedDeerProperties.TIME_PERIOD_FACTOR.getName();
 
 	@Parameter
 	public String runtime;
@@ -101,8 +97,9 @@ public class CamelRuntimeProviderFeatureTest {
 		return Arrays.asList(new Object[][] {
 				// runtime provider, knative available, mongo available, jmx available
 				{ "Spring Boot", true, true, true }, 
-				{ "Quarkus", false, true, false },
-				{ "Karaf", false, false, true } });
+				{ "Quarkus", true, true, false }, //knative is available in latest quarkus catalog
+				{ "Karaf", false, false, true } 
+				});
 	}
 
 	/**
@@ -131,9 +128,7 @@ public class CamelRuntimeProviderFeatureTest {
 
 	@Before
 	public void setupTimeout() {
-		timePeriodfactor = System.getProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
-		System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, "3");
-		TimePeriod.updateFactor();
+		TimeoutPeriodManipulator.setFactor(5);
 	}
 
 	/**
@@ -146,12 +141,7 @@ public class CamelRuntimeProviderFeatureTest {
 
 	@After
 	public void tearDown() {
-		if (timePeriodfactor != null) {
-			System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, timePeriodfactor);
-		} else {
-			System.clearProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
-		}
-		TimePeriod.updateFactor();
+		TimeoutPeriodManipulator.clearFactor();
 
 		// Set runtime provider back to Default.
 		setCamelRuntimeProvider(DEFAULT_PROVIDER);
@@ -172,73 +162,29 @@ public class CamelRuntimeProviderFeatureTest {
 	public ErrorCollector collector = new ErrorCollector();
 
 	/*
-	 * Checks if component proposal is available for currently tested runtime.
-	 * If component is part of tested runtime, proposal should be available.
+	 * Checks if component proposal is available for currently tested runtime. If
+	 * component is part of tested runtime, proposal should be available.
 	 */
 	@Test
 	public void testCamelRuntimeProvider() {
-		insertComponent(KNATIVE);
+		EditorComponentControl.insertComponent(KNATIVE, COMPONENT_PLACE);
+		sourceEditor = new SourceEditor();
 		ContentAssistant assistant = sourceEditor.openContentAssistant();
 		collector.checkThat(assistant.getProposals().contains(KNATIVE_PROP), equalTo(knative_av));
-		removeComponent(KNATIVE);
+		//AbstractWait.sleep(TimePeriod.getCustom(1000));
+		EditorComponentControl.removeComponent(KNATIVE);
 
-		insertComponent(MONGO);
+		EditorComponentControl.insertComponent(MONGO, COMPONENT_PLACE);
+		sourceEditor = new SourceEditor();
 		assistant = sourceEditor.openContentAssistant();
 		collector.checkThat(assistant.getProposals().contains(MONGO_PROP), equalTo(mongo_av));
-		removeComponent(MONGO);
+		EditorComponentControl.removeComponent(MONGO);
 
-		insertComponent(JMX);
+		EditorComponentControl.insertComponent(JMX, COMPONENT_PLACE);
+		sourceEditor = new SourceEditor();
 		assistant = sourceEditor.openContentAssistant();
 		collector.checkThat(assistant.getProposals().contains(JMX_PROP), equalTo(jmx_av));
-		removeComponent(JMX);
-	}
-
-	/**
-	 * Open file in editor.
-	 *
-	 * @param path to file.
-	 */
-	public void openFile(String... path) {
-		ProjectItem item = new ProjectExplorer().getProject(PROJECT_NAME).getProjectItem(path);
-		item.open();
-	}
-
-	/**
-	 * Inserts component to camel-context to uri="$HERE".
-	 *
-	 * @param component to be added represented by string.
-	 */
-	public void insertComponent(String component) {
-		sourceEditor = new SourceEditor();
-		cursorPosition = sourceEditor.getText().indexOf("uri");
-		sourceEditor.setCursorPosition(cursorPosition += 5); // to write between ""
-		sourceEditor.insertText(component);
-		sourceEditor.setCursorPosition(cursorPosition += component.length());
-	}
-
-	/**
-	 * Removes component from uri="$HERE".
-	 *
-	 * @param component to be removed represented by string.
-	 */
-	public void removeComponent(String component) {
-		sourceEditor = new SourceEditor();
-		String withoutComponent = sourceEditor.getText().replace(component, "");
-		sourceEditor.selectText(0, withoutComponent.length() + component.length());
-		sourceEditor.insertText(withoutComponent);
-		sourceEditor.setCursorPosition(cursorPosition -= component.length());
-	}
-
-	/**
-	 * Reopen editor to take effect of changes.
-	 *
-	 * @param file Name of file to be open after reopen.
-	 */
-	public void reopenEditor(String file) {
-		sourceEditor = new SourceEditor();
-		sourceEditor.close();
-		openFile(file);
-		sourceEditor = new SourceEditor();
+		EditorComponentControl.removeComponent(JMX);
 	}
 
 	/**

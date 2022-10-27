@@ -17,14 +17,14 @@
 
 package com.github.cameltooling.lsp.ui.tests;
 
+import com.github.cameltooling.lsp.reddeer.editor.EditorComponentControl;
 import com.github.cameltooling.lsp.reddeer.editor.SourceEditor;
 import com.github.cameltooling.lsp.reddeer.preference.CamelExtraComponents;
 import com.github.cameltooling.lsp.reddeer.utils.CreateNewEmptyFile;
 import com.github.cameltooling.lsp.reddeer.utils.JavaProjectFactory;
 import com.github.cameltooling.lsp.ui.tests.utils.EditorManipulator;
-import org.eclipse.reddeer.common.properties.RedDeerProperties;
-import org.eclipse.reddeer.common.wait.TimePeriod;
-import org.eclipse.reddeer.eclipse.core.resources.ProjectItem;
+import com.github.cameltooling.lsp.ui.tests.utils.TimeoutPeriodManipulator;
+
 import org.eclipse.reddeer.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.reddeer.eclipse.ui.views.log.LogView;
 import org.eclipse.reddeer.jface.text.contentassist.ContentAssistant;
@@ -53,11 +53,12 @@ import static org.hamcrest.CoreMatchers.equalTo;
 * @author fpospisi
 */
 @RunWith(RedDeerSuite.class)
-public class AdditionalComponentFeatureTest {
+public class AdditionalComponentFeatureTest extends DefaultTest {
 
 	public static final String PROJECT_NAME = "additional-component-test";
 	public static final String CAMEL_CONTEXT = "camel-context.xml";
 	public static final String SOURCE_TAB = "Source";
+	public static final String COMPONENT_PLACE = "uri";
 
 	private static final String COMPONENT_NAME = "abcd";
 	private static final String COMPONENT_PROPOSAL = "abcd:xyz";
@@ -65,9 +66,6 @@ public class AdditionalComponentFeatureTest {
 	public static final String EXTRA_COMPONENT_JSON_PATH = "resources/additional-component-feature-component.json";
 
 	private SourceEditor sourceEditor;
-
-	private String timePeriodfactor;
-	private static final String TIMEOUT_PERIOD_FACTOR_PROPETY_NAME = RedDeerProperties.TIME_PERIOD_FACTOR.getName();
 
 	/**
 	 * Creates empty project, then creates XML file with camel-context.
@@ -93,9 +91,7 @@ public class AdditionalComponentFeatureTest {
 
 	@Before
 	public void setupTimeout() {
-		timePeriodfactor = System.getProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
-		System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, "3");
-		TimePeriod.updateFactor();
+		TimeoutPeriodManipulator.setFactor(3);
 	}
 
 	/**
@@ -108,13 +104,7 @@ public class AdditionalComponentFeatureTest {
 
 	@After
 	public void tearDown() {
-		if (timePeriodfactor != null) {
-			System.setProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME, timePeriodfactor);
-		} else {
-			System.clearProperty(TIMEOUT_PERIOD_FACTOR_PROPETY_NAME);
-		}
-		TimePeriod.updateFactor();
-
+		TimeoutPeriodManipulator.clearFactor();
 		setAdditionalComponent(""); // set version back to empty
 	}
 
@@ -139,13 +129,11 @@ public class AdditionalComponentFeatureTest {
 	 */
 	@Test
 	public void testAdditionalComponentFeature() {
-		insertComponent(COMPONENT_NAME);
-
+		EditorComponentControl.insertComponent(COMPONENT_NAME, COMPONENT_PLACE);
 		collector.checkThat(testProposal(COMPONENT_NAME, COMPONENT_PROPOSAL), equalTo(false));
-
 		setAdditionalComponent(EditorManipulator.getFileContent(EXTRA_COMPONENT_JSON_PATH));
-		reopenEditor(CAMEL_CONTEXT);
-
+		SourceEditor.reopenEditor(PROJECT_NAME, CAMEL_CONTEXT);
+		EditorComponentControl.insertComponent(COMPONENT_NAME, COMPONENT_PLACE);
 		collector.checkThat(testProposal(COMPONENT_NAME, COMPONENT_PROPOSAL), equalTo(true));
 	}
 
@@ -182,39 +170,5 @@ public class AdditionalComponentFeatureTest {
 		sourceEditor.setCursorPosition(cursorPosition + component.length());
 		ContentAssistant assistant = sourceEditor.openContentAssistant();
 		return assistant.getProposals().contains(expectedProposal);
-	}
-
-	/*
-	 * Inserts component into source.
-	 * 
-	 * @param component Inserted component.
-	 */
-	public void insertComponent(String component) {
-		sourceEditor = new SourceEditor();
-		int cursorPosition = sourceEditor.getText().indexOf("uri");
-		sourceEditor.setCursorPosition(cursorPosition + 5); // to write between ""
-		sourceEditor.insertText(component);
-		sourceEditor.save();
-	}
-
-	/**
-	 * Open file in editor.
-	 *
-	 * @param path to file.
-	 */
-	public void openFile(String... path) {
-		ProjectItem item = new ProjectExplorer().getProject(PROJECT_NAME).getProjectItem(path);
-		item.open();
-	}
-
-	/**
-	 * Reopen editor to take effect of changes.
-	 *
-	 * @param file Name of file to be open after reopen.
-	 */
-	public void reopenEditor(String file) {
-		sourceEditor.close();
-		openFile(file);
-		sourceEditor = new SourceEditor();
 	}
 }
