@@ -104,7 +104,7 @@ public abstract class DefaultLSPCompletionTest {
 
 	@Before
 	public void setupTimeout() {
-		TimeoutPeriodManipulator.setFactor(1);
+		TimeoutPeriodManipulator.setFactor(5);
 	}
 
 	/**
@@ -128,8 +128,12 @@ public abstract class DefaultLSPCompletionTest {
 	 */
 	@AfterClass
 	public static void defaultAfterClassClean() {
+		log.info("Closing all non-workbench shells.");
+		WorkbenchShellHandler.getInstance().closeAllNonWorbenchShells();
 		log.info("Deleting all projects");
 		new CleanWorkspaceRequirement().fulfill();
+		log.info("Clean Error Log");
+		new CleanErrorLogRequirement().fulfill();
 	}
 
 	@Rule

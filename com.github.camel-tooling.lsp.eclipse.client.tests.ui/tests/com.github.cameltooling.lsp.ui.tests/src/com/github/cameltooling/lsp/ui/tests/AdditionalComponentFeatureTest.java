@@ -53,7 +53,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 * @author fpospisi
 */
 @RunWith(RedDeerSuite.class)
-public class AdditionalComponentFeatureTest {
+public class AdditionalComponentFeatureTest extends DefaultTest {
 
 	public static final String PROJECT_NAME = "additional-component-test";
 	public static final String CAMEL_CONTEXT = "camel-context.xml";

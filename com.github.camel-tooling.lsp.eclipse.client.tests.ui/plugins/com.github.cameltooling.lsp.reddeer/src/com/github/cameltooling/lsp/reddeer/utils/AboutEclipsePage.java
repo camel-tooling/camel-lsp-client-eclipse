@@ -52,6 +52,7 @@ public class AboutEclipsePage {
 	public static void open() {
 		new ShellMenuItem(new WorkbenchShell(), "Window", "Navigation", "Find Actions").select();
 		Shell shell = new DefaultShell("Find Actions");
+		new WaitUntil(new ShellIsAvailable(shell), TimePeriod.DEFAULT);
 		new DefaultText(shell, 0).setText("About");
 		new DefaultTableItem().click();
 		new WaitUntil(new ShellIsAvailable(ABOUT_PLATFORM), TimePeriod.DEFAULT);

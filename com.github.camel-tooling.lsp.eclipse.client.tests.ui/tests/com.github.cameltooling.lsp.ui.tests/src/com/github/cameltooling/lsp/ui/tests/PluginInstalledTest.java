@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
  * @author fpospisi
  */
 @RunWith(RedDeerSuite.class)
-public class PluginInstalledTest {
+public class PluginInstalledTest extends DefaultTest {
 
 	public static final String provider = "JBoss by Red Hat";
 	public static final String name = "Apache Camel LSP Client Extensions Plugin";

@@ -53,7 +53,7 @@ import com.github.cameltooling.lsp.reddeer.preference.CamelCatalogVersion;
 * @author fpospisi
 */
 @RunWith(RedDeerSuite.class)
-public class CamelCatalogVersionFeatureTest {
+public class CamelCatalogVersionFeatureTest extends DefaultTest {
 
 	public static final String PROJECT_NAME = "catalog-feature-test";
 	public static final String CAMEL_CONTEXT = "camel-context.xml";

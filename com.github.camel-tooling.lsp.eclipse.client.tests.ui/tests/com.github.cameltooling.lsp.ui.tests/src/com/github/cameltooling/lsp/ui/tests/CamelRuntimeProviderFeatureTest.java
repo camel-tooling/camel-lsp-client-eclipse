@@ -57,7 +57,7 @@ import com.github.cameltooling.lsp.ui.tests.utils.TimeoutPeriodManipulator;
 */
 @RunWith(RedDeerSuite.class)
 @UseParametersRunnerFactory(ParameterizedRequirementsRunnerFactory.class)
-public class CamelRuntimeProviderFeatureTest {
+public class CamelRuntimeProviderFeatureTest extends DefaultTest {
 
 	public static final String PROJECT_NAME = "catalog-feature-test";
 	public static final String CAMEL_CONTEXT = "camel-context.xml";
@@ -128,7 +128,7 @@ public class CamelRuntimeProviderFeatureTest {
 
 	@Before
 	public void setupTimeout() {
-		TimeoutPeriodManipulator.setFactor(3);
+		TimeoutPeriodManipulator.setFactor(5);
 	}
 
 	/**

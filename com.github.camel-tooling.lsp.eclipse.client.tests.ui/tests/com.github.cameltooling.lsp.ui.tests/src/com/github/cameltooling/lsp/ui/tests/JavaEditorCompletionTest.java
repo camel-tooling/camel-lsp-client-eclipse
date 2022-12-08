@@ -51,7 +51,7 @@ import com.github.cameltooling.lsp.ui.tests.utils.TimeoutPeriodManipulator;
 * @author fpospisi
 */
 @RunWith(RedDeerSuite.class)
-public class JavaEditorCompletionTest {
+public class JavaEditorCompletionTest extends DefaultTest {
 
 	public static final String PROJECT_NAME = "java-dsl-completion-test";
 	public static final String CAMEL_ROUTE_NAME = "CamelRoute";
@@ -94,7 +94,7 @@ public class JavaEditorCompletionTest {
 
 	@Before
 	public void setupTimeout() {
-		TimeoutPeriodManipulator.setFactor(3);
+		TimeoutPeriodManipulator.setFactor(5);
 	}
 
 	/*
