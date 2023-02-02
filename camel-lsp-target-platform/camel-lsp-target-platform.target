@@ -1,44 +1,46 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><?pde version="3.8"?><target name="camel-lsp-eclipse" sequenceNumber="7">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target name="camel-lsp-eclipse" sequenceNumber="7">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.pde.feature.group" version="3.14.1100.v20220308-0310"/>
-<unit id="org.eclipse.pde.source.feature.group" version="3.14.1100.v20220308-0310"/>
-<unit id="org.eclipse.sdk.feature.group" version="4.23.0.v20220308-0722"/>
-<unit id="org.eclipse.sdk.tests.feature.group" version="4.23.0.v20220308-0722"/>
-<unit id="org.eclipse.test.feature.group" version="3.8.0.v20211210-1030"/>
-<unit id="org.eclipse.jface.text.tests" version="3.12.400.v20220210-1738"/>
-<repository location="https://download.eclipse.org/eclipse/updates/4.23/"/>
+<unit id="org.eclipse.pde.feature.group" version="3.14.1400.v20221123-1800"/>
+<unit id="org.eclipse.pde.source.feature.group" version="3.14.1400.v20221123-1800"/>
+<unit id="org.eclipse.sdk.feature.group" version="4.26.0.v20221123-2302"/>
+<unit id="org.eclipse.sdk.tests.feature.group" version="4.26.0.v20221123-1800"/>
+<unit id="org.eclipse.test.feature.group" version="3.8.300.v20221120-0720"/>
+<unit id="org.eclipse.jface.text.tests" version="3.12.600.v20221027-2026"/>
+<repository location="https://download.eclipse.org/eclipse/updates/4.26/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.assertj" version="3.20.2.v20210706-1104"/>
 <unit id="org.assertj.source" version="3.20.2.v20210706-1104"/>
-<repository location="https://download.eclipse.org/tools/orbit/R-builds/R20210825222808/repository"/>
+<repository location="https://download.eclipse.org/tools/orbit/R-builds/R20220302172233/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.lsp4e" version="0.13.9.202202021529"/>
-<unit id="org.eclipse.lsp4e.jdt" version="0.10.1.202009250956"/>
-<unit id="org.eclipse.lsp4j.sdk.feature.group" version="0.12.0.v20210402-1310"/>
-<unit id="org.eclipse.wst.xml_ui.feature.feature.group" version="3.25.0.v202201160258"/>
-<unit id="org.eclipse.ui.genericeditor" version="1.2.200.v20211217-1247"/>
-<repository location="https://download.eclipse.org/releases/2022-03"/>
+<unit id="org.eclipse.lsp4e" version="0.15.0.202211292024"/>
+<unit id="org.eclipse.lsp4e.jdt" version="0.10.2.202205031750"/>
+<unit id="org.eclipse.lsp4j.sdk.feature.group" version="0.19.0.v20221118-0401"/>
+<unit id="org.eclipse.wst.xml_ui.feature.feature.group" version="3.28.0.v202211200019"/>
+<unit id="org.eclipse.ui.genericeditor" version="1.2.300.v20220915-0924"/>
+<repository location="https://download.eclipse.org/releases/2022-12"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.reddeer.codegen.feature.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.eclipse.feature.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.eclipse.feature.source.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.gef.spy.feature.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.graphiti.feature.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.graphiti.feature.source.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.logparser.feature.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.logparser.feature.source.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.recorder.feature.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.recorder.feature.source.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.spy.feature.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.swt.feature.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.swt.feature.source.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.ui.feature.feature.group" version="4.1.0.v20220309-1055"/>
-<unit id="org.eclipse.reddeer.ui.feature.source.feature.group" version="4.1.0.v20220309-1055"/>
-<repository location="https://download.eclipse.org/reddeer/releases/4.1.0"/>
+<unit id="org.eclipse.reddeer.codegen.feature.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.eclipse.feature.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.eclipse.feature.source.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.gef.spy.feature.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.graphiti.feature.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.graphiti.feature.source.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.logparser.feature.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.logparser.feature.source.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.recorder.feature.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.recorder.feature.source.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.spy.feature.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.swt.feature.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.swt.feature.source.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.ui.feature.feature.group" version="4.4.0.v20221129-1611"/>
+<unit id="org.eclipse.reddeer.ui.feature.source.feature.group" version="4.4.0.v20221129-1611"/>
+<repository location="https://download.eclipse.org/reddeer/releases/4.4.0"/>
 </location>
 </locations>
 </target>
