@@ -59,7 +59,7 @@ import com.github.cameltooling.lsp.ui.tests.utils.TimeoutPeriodManipulator;
 @UseParametersRunnerFactory(ParameterizedRequirementsRunnerFactory.class)
 public class CamelRuntimeProviderFeatureTest extends DefaultTest {
 
-	public static final String PROJECT_NAME = "catalog-feature-test";
+	public static final String PROJECT_NAME = "CatalogFeatureTest";
 	public static final String CAMEL_CONTEXT = "camel-context.xml";
 	public static final String RESOURCES_CONTEXT_PATH = "resources/catalog-version-feature-context.xml";
 	public static final String SOURCE_TAB = "Source";
@@ -98,7 +98,7 @@ public class CamelRuntimeProviderFeatureTest extends DefaultTest {
 				// runtime provider, knative available, mongo available, jmx available
 				{ "Spring Boot", true, true, true }, 
 				{ "Quarkus", true, true, false }, //knative is available in latest quarkus catalog
-				{ "Karaf", false, false, true } 
+				{ "Karaf", false, true, true } 
 				});
 	}
 
