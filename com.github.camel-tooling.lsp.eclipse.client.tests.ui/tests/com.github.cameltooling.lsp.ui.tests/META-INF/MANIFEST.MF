@@ -25,7 +25,7 @@ Require-Bundle: org.eclipse.ui,
  com.github.camel-tooling.eclipse.client;bundle-version="1.0.0",
  org.eclipse.reddeer.junit
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-Vendor: %Bundle-Vendor
 Eclipse-RegisterBuddy: org.apache.log4j
 Eclipse-BundleShape: dir

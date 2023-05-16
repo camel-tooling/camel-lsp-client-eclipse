@@ -53,7 +53,7 @@ import com.github.cameltooling.lsp.ui.tests.utils.TimeoutPeriodManipulator;
 @RunWith(RedDeerSuite.class)
 public class JavaEditorCompletionTest extends DefaultTest {
 
-	public static final String PROJECT_NAME = "java-dsl-completion-test";
+	public static final String PROJECT_NAME = "JavaDslCompletionTest";
 	public static final String CAMEL_ROUTE_NAME = "CamelRoute";
 	public static final String CAMEL_ROUTE = "CamelRoute.java";
 
