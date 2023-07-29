@@ -1,5 +1,5 @@
 [![GitHub tag](https://img.shields.io/github/tag/camel-tooling/camel-lsp-client-eclipse.svg?style=plastic)]()
-[![CircleCI](https://circleci.com/gh/camel-tooling/camel-lsp-client-eclipse.svg?style=shield)](https://circleci.com/gh/camel-tooling/camel-lsp-client-eclipse)
+[![Build and Test](https://github.com/camel-tooling/camel-lsp-client-eclipse/actions/workflows/main.yml/badge.svg)](https://github.com/camel-tooling/camel-lsp-client-eclipse/actions/workflows/main.yml)
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)]()
 [![Gitter](https://img.shields.io/gitter/room/camel-tooling/Lobby.js.svg)](https://gitter.im/camel-tooling/Lobby)
 
