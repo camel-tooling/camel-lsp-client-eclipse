@@ -17,6 +17,7 @@
 		<tycho-version>0.26.0</tycho-version>
 		<sonar.jacoco.reportPath>../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.jacoco.itReportPath>../target/jacoco-it.exec</sonar.jacoco.itReportPath>
+		<os-jvm-flags/> <!-- for the default case -->
 	</properties>
 
 	<build>
@@ -33,10 +34,21 @@
 					<includes>
 						<include>**/*IT.class</include>
 					</includes>
-					<argLine>${tycho.testArgLine} -XX:+HeapDumpOnOutOfMemoryError</argLine>
+					<argLine>${tycho.testArgLine} -XX:+HeapDumpOnOutOfMemoryError ${os-jvm-flags}</argLine>
 					<osgiDataDirectory>${project.basedir}/target/work sp@cé</osgiDataDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+		<profile>
+			<id>macosx-jvm-flags</id>
+			<activation>
+				<os><family>mac</family></os>
+			</activation>
+			<properties>
+				<os-jvm-flags>-XstartOnFirstThread</os-jvm-flags>
+			</properties>
+		</profile>
+	</profiles>
 </project>
