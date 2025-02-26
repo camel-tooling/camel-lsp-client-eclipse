@@ -38,7 +38,7 @@
 <unit id="org.eclipse.reddeer.swt.feature.source.feature.group" version="4.5.0.v20230308-1253"/>
 <unit id="org.eclipse.reddeer.ui.feature.feature.group" version="4.5.0.v20230308-1253"/>
 <unit id="org.eclipse.reddeer.ui.feature.source.feature.group" version="4.5.0.v20230308-1253"/>
-<repository location="https://download.eclipse.org/reddeer/releases/4.5.0"/>
+<repository location="https://archive.eclipse.org/reddeer/downloads/releases/4.5.0/"/>
 </location>
 </locations>
 </target>
